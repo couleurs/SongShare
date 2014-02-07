@@ -1,22 +1,7 @@
 extends layout
 
 block content
-  div.container
-    div.col-xs-12
-      div.h1 #{title}
-      | Welcome to #{title}
-      a(href='picksong') Choose Song
-
-  div.container
-    form.form-horizontal
-      div.form-group
-        label.col-sm-2.control-label(for='inputEmail') Email
-        div.col-sm-10
-          input.form-control(type='email' id='inputEmail' placeholder='Email')
-      div.form-group
-        label.col-sm-2.control-label(for='inputPassword') Password
-        div.col-sm-10
-          input.form-control(type='password' id='inputPassword' placeholder='Password')
-      div.form-group
-        div.col-sm-offset-2.col-sm-10
-          button.btn.btn-default(type='submit') Sign in
+  div.jumbotron
+    h1= title
+    p Welcome to SongShare!
+    p: a.btn.btn-lg.btn-primary(href='#' role='button') Get started
