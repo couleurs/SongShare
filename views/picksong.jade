@@ -1,20 +1,22 @@
 extends layout
 
 block content
-  h1= title
-  p Choose a song
+  div.container
+    h1= title
+    p Choose a song
 
   // Search Box
-  div.row
-    div.col-lg-4
-      div.input-group
-        span.input-group-addon
-          span.glyphicon.glyphicon-search
-        input.form-control(type='text' placeholder='Search')
-        span.input-group-btn
-          button.btn.btn-default(type='button') Go!
+  div.container
+    div.row
+      div.col-lg-4
+        div.input-group
+          span.input-group-addon
+            span.glyphicon.glyphicon-search
+          input.form-control(type='text' placeholder='Search')
+          span.input-group-btn
+            button.btn.btn-default(type='button') Go!
 
-  div
+  div.container
     a(href='listen')
       button.btn.btn-default(type='button')
         span.glyphicon.glyphicon-music
