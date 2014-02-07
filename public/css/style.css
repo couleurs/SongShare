@@ -10,3 +10,11 @@ a {
 .navbar-collapse div {
   margin-right: 5px;
 }
+
+.container {
+	padding-top: 10px;
+}
+
+.albumart{
+	padding: 10px;
+}
