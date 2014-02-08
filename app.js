@@ -7,6 +7,9 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var picksong = require('./routes/picksong');
+var pickfriend = require('./routes/pickfriend');
+var listen = require('./routes/listen');
+var inbox = require('./routes/inbox');
 var http = require('http');
 var path = require('path');
 
@@ -32,9 +35,12 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/user', user.list);
 app.get('/picksong', picksong.render);
-app.get('/users', user.list);
-app.get('/users/:id(\\d+)', user.show);
+app.get('/pickfriend', pickfriend.render);
+app.get('/listen', listen.render);
+app.get('/inbox', inbox.render);
+app.get('/user/:id(\\d+)', user.show);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

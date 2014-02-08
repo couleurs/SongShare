@@ -8,5 +8,5 @@ exports.list = function(req, res){
 };
 
 exports.show = function(req, res){
-  res.render('show', { title: 'Dummy profile' });
+  res.render('user', { title: 'Dummy profile' });
 };
