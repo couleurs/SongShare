@@ -12,7 +12,6 @@ var listen = require('./routes/listen');
 var inbox = require('./routes/inbox');
 var http = require('http');
 var path = require('path');
-
 var app = express();
 
 // all environments
@@ -42,6 +41,30 @@ app.get('/listen', listen.render);
 app.get('/inbox', inbox.render);
 app.get('/user/:id(\\d+)', user.show);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app);
+
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+//Socket.IO stuff
+var io = require('socket.io').listen(server);
+
+var connectCounter = 0;
+
+var listenRoom = io.of("/listen").on('connection', function(socket) {	
+	connectCounter++;
+	listenRoom.emit('connections', { connections: connectCounter} );
+
+	socket.on('paused', function (data) {
+		listenRoom.emit('pauseplayer');
+	});
+
+	socket.on('resumed', function (data) {
+		listenRoom.emit('playplayer');
+	});	
+
+	socket.on('disconnect', function () {
+		connectCounter--;
+	});
 });
