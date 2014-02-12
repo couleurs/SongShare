@@ -12,6 +12,7 @@ function onYouTubeIframeAPIReady() {
     height: '390',
     width: '640',
     videoId: 'UDoEqBas4Y0',
+    playerVars: { 'controls': 0 },
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
@@ -35,7 +36,12 @@ function onPlayerStateChange(event) {
     }
 }
 
+//for local testing
 var socket = io.connect('http://localhost/listen');
+
+//for heroku
+//var socket = io.connect('http://songshare.herokuapp.com/listen');
+
 socket.on('pauseplayer', function (data) {
 	player.pauseVideo();
 });
