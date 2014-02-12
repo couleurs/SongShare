@@ -32,7 +32,7 @@ if ('development' == app.get('env')) {
 //mongodb
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/songshare');
+var db = monk('mongodb://localhost/mydb');
 
 /*
 var mongoUri = process.env.MONGOLAB_URI ||
