@@ -7,25 +7,26 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 //creates player
 var player;
+var onIframeReady;
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '390',
-    width: '640',
-    videoId: 'UDoEqBas4Y0',
-    playerVars: { 'controls': 0 },
-    events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
-    }
-  });
+  onIframeReady = function() {
+	  player = new YT.Player('player', {
+	    height: '390',
+	    width: '640',
+	    videoId: 'UDoEqBas4Y0',
+	    playerVars: { 'controls': 0 },
+	    events: {
+	      'onReady': onPlayerReady,
+	      'onStateChange': onPlayerStateChange
+	    }
+	  });
+	}
 }
 
-var otherUserOnline = false;
-var playerReady = false;
+// var otherUserOnline = false;
+// var playerReady = false;
 function onPlayerReady(event) {
-	if (otherUserOnline)
-		player.playVideo();
-	else playerReady = true;
+	player.playVideo();
 }
 
 function onPlayerStateChange(event) {
@@ -52,9 +53,6 @@ socket.on('playplayer', function (data) {
 
 socket.on('connections', function (data) {
 	if (data.connections > 1) {
-		otherUserOnline = true;
-
-		if (playerReady)
-			player.playVideo();
+		onIframeReady();
 	}
 });
