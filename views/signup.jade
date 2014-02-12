@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1 Sign Up
+
+  .container
+    .row
+      .col-xs-12.col-md-6
+        form(role='form')
+            .form-group
+              label(for='inputUsername') Username
+              input#inputUsername.form-control(type='text', placeholder='Username')
+            .form-group
+              label(for='inputFirstName') First name
+              input#inputFirstName.form-control(type='text', placeholder='First name')
+            .form-group
+              label(for='inputLastName') Last name
+              input#inputLastName.form-control(type='text', placeholder='Last name')
+            .form-group
+              label(for='inputEmail') Email
+              input#inputEmail.form-control(type='email', placeholder='Email')
+            .form-group
+              label(for='inputPassword') Password
+              input#inputPassword.form-control(type='password', placeholder='Password')
+            button.btn.btn-default(type='submit') Submit

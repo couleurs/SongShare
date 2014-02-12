@@ -29,23 +29,13 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//mongodb
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk(process.env.MONGOLAB_URI);
 
-/*
-var mongoUri = process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  'mongodb://localhost/mydb';
-
-mongo.Db.connect(mongoUri, function (err, db) {
-  db.collection('mydocs', function(er, collection) {
-    collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
-    });
-  });
-});
-*/
+// for local db testing
+var db = monk('localhost:27017/songshare'); 
+// heroku db
+// var db = monk(process.env.MONGOLAB_URI);
 
 app.get('/', routes.index);
 app.get('/user', routes.userlist(db));
@@ -53,7 +43,8 @@ app.get('/inbox', routes.inbox);
 app.get('/listen', routes.listen);
 app.get('/picksong', routes.picksong);
 app.get('/pickfriend', routes.pickfriend);
-app.get('/user/:id(\\d+)', routes.user);
+app.get('/user/:username', routes.user(db));
+app.get('/signup', routes.signup);
 
 
 http.createServer(app).listen(app.get('port'), function(){

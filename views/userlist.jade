@@ -2,9 +2,9 @@ extends layout
 
 block content
   h1.
-    User List
+    Users
 
-  ul
+  ul.list-unstyled
     each user, i in users
       li
-        a(href="/user/1")= user.firstname
+        a(href="/user/" + user.username)= user.firstname + " " + user.lastname
