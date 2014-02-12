@@ -38,7 +38,7 @@ var db = monk('localhost:27017/songshare');
 // var db = monk(process.env.MONGOLAB_URI);
 
 app.get('/', routes.index);
-app.get('/user', routes.userlist(db));
+app.get('/userlist', routes.userlist(db));
 app.get('/inbox', routes.inbox);
 app.get('/listen', routes.listen);
 app.get('/picksong', routes.picksong);
@@ -46,6 +46,7 @@ app.get('/pickfriend', routes.pickfriend);
 app.get('/user/:username', routes.user(db));
 app.get('/signup', routes.signup);
 
+app.post('/adduser', routes.adduser(db));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
