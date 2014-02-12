@@ -32,7 +32,7 @@ if ('development' == app.get('env')) {
 //mongodb
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('mongodb://localhost/mydb');
+var db = monk('ds027759.mongolab.com:27759/heroku_app21981638');
 
 /*
 var mongoUri = process.env.MONGOLAB_URI ||
