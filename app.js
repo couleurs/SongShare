@@ -5,11 +5,6 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
-var picksong = require('./routes/picksong');
-var pickfriend = require('./routes/pickfriend');
-var listen = require('./routes/listen');
-var inbox = require('./routes/inbox');
 var http = require('http');
 var path = require('path');
 var app = express();
@@ -33,13 +28,23 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+var mongo = require('mongodb');
+var monk = require('monk');
+
+// for local db testing
+var db = monk('localhost:27017/songshare'); 
+// heroku db
+// var db = monk(process.env.MONGOLAB_URI);
+
 app.get('/', routes.index);
-app.get('/user', user.list);
-app.get('/picksong', picksong.render);
-app.get('/pickfriend', pickfriend.render);
-app.get('/listen', listen.render);
-app.get('/inbox', inbox.render);
-app.get('/user/:id(\\d+)', user.show);
+app.get('/user', routes.userlist(db));
+app.get('/inbox', routes.inbox);
+app.get('/listen', routes.listen);
+app.get('/picksong', routes.picksong);
+app.get('/pickfriend', routes.pickfriend);
+app.get('/user/:username', routes.user(db));
+app.get('/signup', routes.signup);
+
 
 var server = http.createServer(app);
 

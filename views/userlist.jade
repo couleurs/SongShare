@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1.
+    Users
+
+  ul.list-unstyled
+    each user, i in users
+      li
+        a(href="/user/" + user.username)= user.firstname + " " + user.lastname
