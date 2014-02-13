@@ -41,7 +41,7 @@ function onPlayerStateChange(event) {
 //var socket = io.connect('http://localhost/listen');
 
 //for heroku
-var socket = io.connect('http://songshare147.herokuapp.com/listen');
+var socket = io.connect('https://songshare147.herokuapp.com/listen');
 
 socket.on('pauseplayer', function (data) {
 	player.pauseVideo();
