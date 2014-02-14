@@ -20,7 +20,6 @@ function onYouTubeIframeAPIReady() {
 	      'onStateChange': onPlayerStateChange
 	    }
 	  });
-	  console.log('player initialized');
 	}
 }
 
@@ -31,7 +30,7 @@ var socket = io.connect('http://localhost/listen');
 // var socket = io.connect('https://songshare147.herokuapp.com/listen');
 
 function onPlayerReady(event) {
-	// player.playVideo();
+	player.playVideo();
 }
 
 function onPlayerStateChange(event) {
@@ -50,8 +49,7 @@ socket.on('playplayer', function (data) {
 	player.playVideo();
 });
 
-socket.on('connections', function (data) {
-	console.log(data.connections)
+socket.on('connections', function (data) {	
 	if (data.connections > 1) {
 		onIframeReady();
 	}
