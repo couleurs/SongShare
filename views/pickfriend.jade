@@ -17,5 +17,6 @@ block content
             img.img-responsive.img-circle.friend-selector(src='http://www.american.edu/uploads/profiles/large/chris_palmer_profile_11.jpg', alt='dude')
             form#formCreateListenRoom(name='createRoom' method='post' action='/listen?videoId=#{videoId}' role='form')
               .form-group
+                input.form-control(type='hidden' name='username' value=friend)
               button.btn.btn-link(type='submit') 
                 =friend
