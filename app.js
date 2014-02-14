@@ -36,6 +36,8 @@ var monk = require('monk');
 // for heroku
 var db = monk(process.env.MONGOLAB_URI);
 
+>>>>>>> bdbfc4b7394111a390fd3ebdd4838405d55fe3fb
+
 app.get('/', routes.index);
 app.get('/userlist', routes.userlist(db));
 app.get('/inbox', routes.inbox(db));
