@@ -12,10 +12,10 @@ var onSecondConnection;
 
 $( document ).ready(function() {
   ytVideoId = $('#player').data('videoid');
-  if (secondConnection) {
-  	console.log("called from second connection");
-  	onSecondConnection(ytVideoId);
-  }
+  // if (secondConnection) {
+  // 	console.log("called from second connection");
+  // 	onSecondConnection(ytVideoId);
+  // }
 });
 
 //creates player
@@ -38,11 +38,10 @@ function onYouTubeIframeAPIReady() {
 	}	
 }
 
-//for local testing
-// var socket = io.connect('http://localhost/listen');
-
-//for heroku
-var socket = io.connect('https://songshare147.herokuapp.com/listen');
+// for local testing
+var socket = io.connect('http://localhost/listen');
+// for heroku
+// var socket = io.connect('https://songshare147.herokuapp.com/listen');
 
 function onPlayerReady(event) {
 	player.playVideo();
@@ -69,13 +68,13 @@ socket.on('connections', function (data) {
 	if (data.connections > 1) {		
 		secondConnection = true;	
 		console.log(ytVideoId);	
-		if (!ytVideoId) {			
+		// if (!ytVideoId) {			
 			onIframeReady(ytVideoId);
-		}
-		else {
-			onSecondConnection = function(videoId) {
-				onIframeReady(videoId);
-			}
-		}
+		// }
+		// else {
+		// 	onSecondConnection = function(videoId) {
+		// 		onIframeReady(videoId);
+		// 	}
+		// }
 	}
 });
