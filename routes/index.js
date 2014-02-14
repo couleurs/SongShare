@@ -29,7 +29,9 @@ exports.user = function(db){
 exports.inbox = function(db){
   return function(req, res) {
     var requests = db.get('songrequests');
-    res.render('inbox', { title: 'Inbox', requests: requests, session: req.session });
+    requests.find({receiver_name: req.session.user.username}, {}, function(e, docs) {
+      res.render('inbox', { title: 'Inbox', requests: docs, session: req.session });
+    });
   }
 }
 

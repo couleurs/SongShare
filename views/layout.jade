@@ -35,7 +35,6 @@ html(lang='en')
               li: a(href='/user/' + session.user.username) 
                 =session.user.username
               li: a(href='/inbox') Inbox
-                span.badge 2
               li: a(href='/logout') Log Out
           -else
             form#formLogin.navbar-form.navbar-right(name='login' method='post' action='/login' role='form')
