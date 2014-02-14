@@ -26,8 +26,11 @@ exports.user = function(db){
   }
 }
 
-exports.inbox = function(req, res){
-  res.render('inbox', { title: 'Inbox', session: req.session });
+exports.inbox = function(db){
+  return function(req, res) {
+    var requests = db.get('songrequests');
+    res.render('inbox', { title: 'Inbox', requests: requests, session: req.session });
+  }
 }
 
 exports.listen = function(db) {

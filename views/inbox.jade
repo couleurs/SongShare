@@ -6,13 +6,11 @@ block content
 
   .container
     .row
-      .col-xs-6.col-sm-3.col-lg-2
-        .h4 Bob Durand:
-        a(href='listen')
-          img.img-responsive.album-selector(src='http://ecx.images-amazon.com/images/I/81tEvdYVSPL._SL1417_.jpg', alt='album art')
-          p M83 - Outro
-      .col-xs-6.col-sm-3.col-lg-2
-        .h4 Bob Durand:
-        a(href='listen')
-          img.img-responsive.album-selector(src='http://ecx.images-amazon.com/images/I/81tEvdYVSPL._SL1417_.jpg', alt='album art')
-          p M83 - Outro
+      each request, i in requests
+        if (request.receiver_name == session.user.username)
+          .col-xs-6.col-sm-3.col-lg-2
+            .h4 
+              = request.requester_name + ':'
+            a(href='/listeningroom/' + request.listeningroom_id + '?videoId=' + request.video_id)
+              img.img-responsive.album-selector(src='http://ecx.images-amazon.com/images/I/81tEvdYVSPL._SL1417_.jpg', alt='album art')
+              p M83 - Outro

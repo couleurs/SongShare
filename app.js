@@ -38,7 +38,7 @@ var db = monk('localhost:27017/songshare');
 
 app.get('/', routes.index);
 app.get('/userlist', routes.userlist(db));
-app.get('/inbox', routes.inbox);
+app.get('/inbox', routes.inbox(db));
 
 //listening room stuff
 app.post('/listen', routes.listen(db));
