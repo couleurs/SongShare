@@ -1,11 +1,24 @@
 extends layout
 
 block content
-  h1.
-    Users
+  h1 Users
 
-  ul.list-unstyled
-    each user, i in users
-      if (!(session.user && user.username == session.user.username))
+  if (session.user)
+    -var friends = session.user.friends;
+    h4 Friends
+    ul.list-unstyled
+      each friend, i in friends
         li
-          a(href="/user/" + user.username)= user.firstname + " " + user.lastname
+          a(href="/user/" + friend)= friend
+    h4 Others
+    ul.list-unstyled
+      each user, i in users
+        -if (user.username != session.user.username && friends.indexOf(user.username) == -1)
+          li
+            a(href="/user/" + user.username)= user.username
+
+  else
+    ul.list-unstyled
+      each user, i in users
+        li
+          a(href="/user/" + user.username)= user.username

@@ -1,13 +1,21 @@
 extends layout
 
 block content
-  .container
-    h1 Pick a friend
+  -var friends = session.user.friends
+  -if (!friends || friends.length == 0)
+    .container
+      h1 Please add some friends
+   
+  -else
+    .container
+      h1 Pick a friend
 
-  .container
-    .row
-      .col-xs-6.col-sm-3                
-        img.img-responsive.img-circle.friend-selector(src='http://www.american.edu/uploads/profiles/large/chris_palmer_profile_11.jpg', alt='dude')
-        form#formCreateListenRoom(name='createRoom' method='post' action='/listen?videoId=#{videoId}' role='form')
-          .form-group
-          button.btn.btn-link(type='submit') Bob Durand     
+    .container
+      .row
+        each friend, i in friends
+          .col-xs-6.col-sm-3                
+            img.img-responsive.img-circle.friend-selector(src='http://www.american.edu/uploads/profiles/large/chris_palmer_profile_11.jpg', alt='dude')
+            form#formCreateListenRoom(name='createRoom' method='post' action='/listen?videoId=#{videoId}' role='form')
+              .form-group
+              button.btn.btn-link(type='submit') 
+                =friend

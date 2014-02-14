@@ -110,8 +110,6 @@ exports.adduser = function(db) {
   return function(req, res) {
     var username = req.body.username;
     var email = req.body.email;
-    var firstname = req.body.firstname;
-    var lastname = req.body.lastname;
     var password = req.body.password;
 
     var collection = db.get('users');
@@ -119,9 +117,8 @@ exports.adduser = function(db) {
     collection.insert({
       'username': username,
       'email': email,
-      'firstname': firstname,
-      'lastname': lastname,
-      'password': password
+      'password': password,
+      'friends': []
     }, function (err, doc) {
       if (err) {
         // If it failed, return error
