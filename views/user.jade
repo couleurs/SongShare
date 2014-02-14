@@ -6,10 +6,23 @@ block content
       .col-xs-12
         img.img-responsive.img-circle(src='http://www.american.edu/uploads/profiles/large/chris_palmer_profile_11.jpg', alt='dude')
       .col-xs-12
-        div.user-info
-          h2= user.firstname + " " + user.lastname
-        div.user-history
+        div.profile-info
+          h2= profile.firstname + " " + profile.lastname
+        div.profile-history
           h4 Recent songs
           p M83 - Outro
           p Oneohtrix Point Never - Chrome Country
-          
+      -if (session.user && profile.username != session.user.username)
+        -var friends = session.user.friends;
+        -if (!friends || friends.indexOf(profile.username) == -1)
+          .col-xs-12
+            form#formAddFriend(name='addfriend' method='post' action='/addfriend' role='form')
+              .form-group
+                input.form-control(type='hidden' name='username' value=profile.username)
+              button.btn.btn-success(type='submit') Add friend
+        -else
+          .col-xs-12
+            form#formRemoveFriend(name='removefriend' method='post' action='/removefriend' role='form')
+              .form-group
+                input.form-control(type='hidden' name='username' value=profile.username)
+              button.btn.btn-danger(type='submit') Remove friend

@@ -4,4 +4,5 @@ block content
   div.jumbotron
     h1= title
     p Welcome to SongShare!
-    p: a.btn.btn-lg.btn-primary(href='signup' role='button') Sign up
+    -if (!session.user)
+      p: a.btn.btn-lg.btn-primary(href='signup' role='button') Sign up

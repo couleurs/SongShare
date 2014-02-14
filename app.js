@@ -1,7 +1,7 @@
 
 /**
- * Module dependencies.
- */
+* Module dependencies.
+*/
 
 var express = require('express');
 var routes = require('./routes');
@@ -48,6 +48,8 @@ app.get('/logout', routes.logout);
 
 app.post('/login', routes.login(db));
 app.post('/adduser', routes.adduser(db));
+app.post('/addfriend', routes.addfriend(db));
+app.post('/removefriend', routes.removefriend(db));
 
 var server = http.createServer(app);
 
@@ -61,18 +63,18 @@ var io = require('socket.io').listen(server);
 var connectCounter = 0;
 
 var listenRoom = io.of("/listen").on('connection', function(socket) {	
-	connectCounter++;
-	listenRoom.emit('connections', { connections: connectCounter} );
+  connectCounter++;
+  listenRoom.emit('connections', { connections: connectCounter} );
 
-	socket.on('paused', function (data) {
-		listenRoom.emit('pauseplayer');
-	});
+  socket.on('paused', function (data) {
+    listenRoom.emit('pauseplayer');
+  });
 
-	socket.on('resumed', function (data) {
-		listenRoom.emit('playplayer');
-	});	
+  socket.on('resumed', function (data) {
+    listenRoom.emit('playplayer');
+  });	
 
-	socket.on('disconnect', function () {
-		connectCounter--;
-	});
+  socket.on('disconnect', function () {
+    connectCounter--;
+  });
 });
