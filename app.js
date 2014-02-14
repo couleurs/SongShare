@@ -31,9 +31,9 @@ if ('development' == app.get('env')) {
 var mongo = require('mongodb');
 var monk = require('monk');
 
-// for local db testing
+// for local testing
 var db = monk('localhost:27017/songshare'); 
-// heroku db
+// for heroku
 // var db = monk(process.env.MONGOLAB_URI);
 
 app.get('/', routes.index);
