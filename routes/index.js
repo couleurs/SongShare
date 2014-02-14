@@ -38,14 +38,23 @@ exports.listen = function(db) {
     var collection = db.get('listeningrooms');
 
     collection.insert({
-        "videoId": req.query.videoId
+        "video_id": req.body.videoid
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
             res.send("There was a problem adding the information to the database.");
         }
         else {        
-            res.redirect("listeningroom/" + doc._id + "?videoId=" + doc.videoId);
+            var reqcollection = db.get('songrequests');
+            reqcollection.insert({
+              "requester_name": req.session.user.username,
+              "receiver_name": req.body.username,
+              "listeningroom_id": doc._id,
+              "video_id": doc.video_id
+            }, function(err, doc) {
+
+              res.redirect("listeningroom/" + doc._id + "?videoId=" + doc.videoId);
+            });        
         }
     });
   }
