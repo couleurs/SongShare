@@ -20,11 +20,16 @@ function onYouTubeIframeAPIReady() {
 	      'onStateChange': onPlayerStateChange
 	    }
 	  });
+	  console.log('player initialized');
 	}
 }
 
-// var otherUserOnline = false;
-// var playerReady = false;
+//for local testing
+//var socket = io.connect('http://localhost/listen');
+
+//for heroku
+var socket = io.connect('https://songshare147.herokuapp.com/listen');
+
 function onPlayerReady(event) {
 	player.playVideo();
 }
@@ -37,12 +42,6 @@ function onPlayerStateChange(event) {
     }
 }
 
-//for local testing
-//var socket = io.connect('http://localhost/listen');
-
-//for heroku
-var socket = io.connect('https://songshare147.herokuapp.com/listen');
-
 socket.on('pauseplayer', function (data) {
 	player.pauseVideo();
 });
@@ -52,6 +51,7 @@ socket.on('playplayer', function (data) {
 });
 
 socket.on('connections', function (data) {
+	console.log(data.connections)
 	if (data.connections > 1) {
 		onIframeReady();
 	}
