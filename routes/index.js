@@ -55,7 +55,7 @@ exports.listen = function(db) {
               "video_id": doc.video_id
             }, function(err, doc) {
 
-              res.redirect("listeningroom/" + doc._id + "?videoId=" + doc.videoId);
+              res.redirect("listeningroom/" + doc._id + "?videoId=" + doc.video_id);
             });        
         }
     });
