@@ -38,11 +38,11 @@ function onYouTubeIframeAPIReady() {
 	}	
 }
 
-//for local testing
-//var socket = io.connect('http://localhost/listen');
-
 //for heroku
 var socket = io.connect('https://songshare147.herokuapp.com/listen');
+// for local testing
+//var socket = io.connect('http://localhost/listen');
+
 
 function onPlayerReady(event) {
 	player.playVideo();
