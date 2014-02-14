@@ -44,7 +44,9 @@ app.get('/picksong', routes.picksong);
 app.get('/pickfriend', routes.pickfriend);
 app.get('/user/:username', routes.user(db));
 app.get('/signup', routes.signup);
+app.get('/logout', routes.logout);
 
+app.post('/login', routes.login(db));
 app.post('/adduser', routes.adduser(db));
 
 var server = http.createServer(app);
