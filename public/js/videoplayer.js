@@ -11,8 +11,8 @@ var onIframeReady;
 function onYouTubeIframeAPIReady() {
   onIframeReady = function() {
 	  player = new YT.Player('player', {
-	    height: '390',
-	    width: '640',
+	    height: '182',
+	    width: '300',
 	    videoId: 'UDoEqBas4Y0',
 	    playerVars: { /*'controls': 0 */},
 	    events: {
@@ -25,13 +25,13 @@ function onYouTubeIframeAPIReady() {
 }
 
 //for local testing
-//var socket = io.connect('http://localhost/listen');
+var socket = io.connect('http://localhost/listen');
 
 //for heroku
-var socket = io.connect('https://songshare147.herokuapp.com/listen');
+// var socket = io.connect('https://songshare147.herokuapp.com/listen');
 
 function onPlayerReady(event) {
-	player.playVideo();
+	// player.playVideo();
 }
 
 function onPlayerStateChange(event) {
