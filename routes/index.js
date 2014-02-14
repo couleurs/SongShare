@@ -53,9 +53,15 @@ exports.listen = function(db) {
               "receiver_name": req.body.username,
               "listeningroom_id": doc._id,
               "video_id": doc.video_id
-            }, function(err, doc) {
+            }, function(err, doc2) {
+              if (err) {
+                console.log("ERROR is " + err);
+              }
+              else {
+                console.log("song request created");
 
-              res.redirect("listeningroom/" + doc._id + "?videoId=" + doc.video_id);
+                res.redirect("listeningroom/" + doc._id + "?videoId=" + doc.video_id);
+              }
             });        
         }
     });

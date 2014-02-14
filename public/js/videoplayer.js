@@ -7,15 +7,15 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var ytVideoId;
 var fetchVideoId;
-// var secondConnection = false;
-// var onSecondConnection;
+var secondConnection = false;
+var onSecondConnection;
 
 $( document ).ready(function() {
   ytVideoId = $('#player').data('videoid');
-  // if (secondConnection) {
-  // 	console.log("called from second conncetion");
-  // 	onSecondConnection(ytVideoId);
-  // }
+  if (secondConnection) {
+  	console.log("called from second connection");
+  	onSecondConnection(ytVideoId);
+  }
 });
 
 //creates player
@@ -67,15 +67,15 @@ socket.on('playplayer', function (data) {
 socket.on('connections', function (data) {	
 	console.log(data.connections);
 	if (data.connections > 1) {		
-		// secondConnection = true;	
+		secondConnection = true;	
 		console.log(ytVideoId);	
-		// if (!ytVideoId) {			
+		if (!ytVideoId) {			
 			onIframeReady(ytVideoId);
-		// }
-		// else {
-		// 	onSecondConnection = function(videoId) {
-		// 		onIframeReady(videoId);
-		// 	}
-		// }
+		}
+		else {
+			onSecondConnection = function(videoId) {
+				onIframeReady(videoId);
+			}
+		}
 	}
 });
