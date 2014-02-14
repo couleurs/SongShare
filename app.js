@@ -39,9 +39,14 @@ var db = monk('localhost:27017/songshare');
 app.get('/', routes.index);
 app.get('/userlist', routes.userlist(db));
 app.get('/inbox', routes.inbox);
-app.get('/listen', routes.listen);
+
+//listening room stuff
+app.post('/listen', routes.listen(db));
+app.get('/listeningroom/:id', routes.listeningRoom);
 app.get('/picksong', routes.picksong);
 app.get('/pickfriend', routes.pickfriend);
+app.get('/getVideoId/:roomId', routes.getVideoId(db));
+
 app.get('/user/:username', routes.user(db));
 app.get('/signup', routes.signup);
 app.get('/logout', routes.logout);

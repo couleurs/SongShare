@@ -5,22 +5,37 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+var ytVideoId = 0;
+var fetchVideoId;
+var secondConnection = false;
+var onSecondConnection;
+
+$( document ).ready(function() {
+  ytVideoId = $('#player').data('listeningroomid');
+  if (secondConnection) {
+  	console.log("called from second conncetion");
+  	onSecondConnection(ytVideoId);
+  }
+});
+
 //creates player
 var player;
 var onIframeReady;
-function onYouTubeIframeAPIReady() {
-  onIframeReady = function() {
-	  player = new YT.Player('player', {
+
+function onYouTubeIframeAPIReady() {	
+  	onIframeReady = function(videoId) {  
+  		console.log(videoId);	
+	  	player = new YT.Player('player', {
 	    height: '182',
 	    width: '300',
-	    videoId: 'UDoEqBas4Y0',
+	    videoId: videoId,
 	    playerVars: { /*'controls': 0 */},
 	    events: {
 	      'onReady': onPlayerReady,
 	      'onStateChange': onPlayerStateChange
 	    }
-	  });
-	}
+	  });	  
+	}	
 }
 
 //for local testing
@@ -51,6 +66,16 @@ socket.on('playplayer', function (data) {
 
 socket.on('connections', function (data) {	
 	if (data.connections > 1) {
-		onIframeReady();
+		secondConnection = true;
+		console.log(ytVideoId);
+		if (ytVideoId != 0) {
+			console.log("called directly");
+			onIframeReady(ytVideoId);
+		}
+		else {
+			onSecondConnection = function(videoId) {
+				onIframeReady(videoId);
+			}
+		}
 	}
 });

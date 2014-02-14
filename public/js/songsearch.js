@@ -18,13 +18,14 @@ var authReady = function() {
       maxResults: 8
     });
 
-    request.execute(function(response) {      
-      var results = response.result.items;
+    request.execute(function(response) {  
+      var results = response.result.items;            
       $('#yt-results').html("");    
       for (i in results) {
         result = results[i];
+        var videoId = result.id.videoId;
         var htmlStr = "<div class='col-xs-6 col-sm-3'>" +
-                        "<a href='pickfriend'>" +
+                        "<a href='pickfriend?videoId=" + videoId + "'>" +
                           "<img src=" + result.snippet.thumbnails.high.url + " class='img-responsive album-selector'>" +
                           "<p>" + result.snippet.title + "</p>" +
                         "</a>" +

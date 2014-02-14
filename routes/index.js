@@ -30,8 +30,39 @@ exports.inbox = function(req, res){
   res.render('inbox', { title: 'Inbox', session: req.session });
 }
 
-exports.listen = function(req, res){
-  res.render('listen', { title: 'Listen', session: req.session });
+exports.listen = function(db) {
+  return function(req, res){
+    var collection = db.get('listeningrooms');
+
+    collection.insert({
+        "videoId": req.query.videoId
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {        
+            res.redirect("listeningroom/" + doc._id + "?videoId=" + doc.videoId);
+        }
+    });
+  }
+};
+
+exports.listeningRoom = function(req, res){
+  res.render('listen', { title: 'Listen', videoId: req.query.videoId, session: req.session });
+}
+
+exports.getVideoId = function(db) {
+  return function(req, res){
+      var roomId = req.params.roomId;
+
+      var listeningrooms = db.get('listeningrooms');
+
+      listeningrooms.findOne({"_id": roomId}, {}, function(e, doc) {
+        res.json(doc);
+      });
+
+  }
 }
 
 exports.picksong = function(req, res){
@@ -39,8 +70,8 @@ exports.picksong = function(req, res){
 }
 
 exports.pickfriend = function(req, res){
-  res.render('pickfriend', { title: 'Pick Friend', session: req.session });
-}
+  res.render('pickfriend', { title: 'Pick Friend', videoId: req.query.videoId, session: req.session });
+};
 
 exports.signup = function(req, res){
   res.render('signup', { title: 'Sign Up', session: req.session });
