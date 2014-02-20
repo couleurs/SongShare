@@ -5,6 +5,8 @@
 
 var express = require('express');
 var routes = require('./routes');
+var user = require('./routes/user');
+var friend = require('./routes/friend');
 var http = require('http');
 var path = require('path');
 var app = express();
@@ -32,11 +34,9 @@ var mongo = require('mongodb');
 var monk = require('monk');
 
 // for local testing
-// var db = monk('localhost:27017/songshare'); 
+var db = monk('localhost:27017/songshare'); 
 // for heroku
-var db = monk(process.env.MONGOLAB_URI);
-
->>>>>>> bdbfc4b7394111a390fd3ebdd4838405d55fe3fb
+// var db = monk(process.env.MONGOLAB_URI);
 
 app.get('/', routes.index);
 app.get('/userlist', routes.userlist(db));
@@ -48,15 +48,15 @@ app.get('/listeningroom/:id', routes.listeningRoom);
 app.get('/picksong', routes.picksong);
 app.get('/pickfriend', routes.pickfriend);
 app.get('/getVideoId/:roomId', routes.getVideoId(db));
-
 app.get('/user/:username', routes.user(db));
-app.get('/signup', routes.signup);
-app.get('/logout', routes.logout);
 
-app.post('/login', routes.login(db));
-app.post('/adduser', routes.adduser(db));
-app.post('/addfriend', routes.addfriend(db));
-app.post('/removefriend', routes.removefriend(db));
+app.get('/signup', user.signup);
+app.get('/logout', user.logout);
+app.post('/login', user.login(db));
+app.post('/adduser', user.adduser(db));
+
+app.post('/addfriend', friend.addfriend(db));
+app.post('/removefriend', friend.removefriend(db));
 
 var server = http.createServer(app);
 
