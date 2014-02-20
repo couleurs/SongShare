@@ -48,7 +48,7 @@ exports.inbox = function(db){
   }
 }
 
-exports.listen = function(db) {
+exports.listen = function(db, nodemailer) {
   return function(req, res){
     var collection = db.get('listeningrooms');
 
@@ -72,14 +72,49 @@ exports.listen = function(db) {
               }
               else {
                 console.log("song request created");
-
-                res.redirect("listeningroom/" + doc._id + "?videoId=" + doc.video_id);
+                var url = "listeningroom/" + doc._id + "?videoId=" + doc.video_id;
+                var emailUrl = req.headers.host + "/" + url;
+                sendRequestEmail(doc2, emailUrl, db, nodemailer);
+                res.redirect(url);
               }
             });        
         }
     });
   }
 };
+
+function sendRequestEmail(request, url, db, nodemailer) {
+  var users = db.get('users');
+  users.findOne({'username': request.receiver_name}, {}, function(e, doc) {
+    if (doc) {
+      var smtpTransport = nodemailer.createTransport('SMTP',{
+          service: 'Gmail',
+          auth: {
+              user: 'songshare147@gmail.com',
+              pass: 'zMwEspe2bR0Spqo'
+          }
+      });
+
+      var mailOptions = {
+          from: "SongShare <songshare147@gmail.com>", // sender address
+          to: doc.email, // list of receivers
+          subject: request.requester_name + " has shared a song with you!", // Subject line
+          html: '<p>Click <a href="' + url + '">here</a> to listen with ' + request.requester_name + '.</p>' + url
+      }
+
+      smtpTransport.sendMail(mailOptions, function(error, response){
+          if(error){
+              console.log(error);
+          }else{
+              console.log("Message sent: " + response.message);
+          }
+
+          // if you don't want to use this transport object anymore, uncomment following line
+          smtpTransport.close(); // shut down the connection pool, no more messages
+      });
+    }
+  });
+}
 
 exports.listeningRoom = function(db) {
   return function(req, res){
@@ -121,8 +156,8 @@ exports.signup = function(db) {
 }
 
 function loadUser(username, db, callback) {
-  var collection = db.get('users');
-  collection.findOne({'username': username}, {}, function(e, doc) {
+  var users = db.get('users');
+  users.findOne({'username': username}, {}, function(e, doc) {
     if (callback) callback(doc);
   });
 }

@@ -46,10 +46,9 @@ app.get('/userlist', routes.userlist(db));
 app.get('/inbox', routes.inbox(db));
 
 //listening room stuff
-app.post('/listen', routes.listen(db));
+app.post('/listen', routes.listen(db, nodemailer));
 app.get('/listeningroom/:id', routes.listeningRoom(db));
 app.post('/picksong', routes.picksong(db));
-app.get('/pickfriend', routes.pickfriend(db));
 app.get('/getVideoId/:roomId', routes.getVideoId(db));
 app.get('/user/:username', routes.user(db));
 app.get('/signup', routes.signup(db));
