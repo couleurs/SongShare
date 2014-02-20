@@ -38,19 +38,19 @@ var db = monk('localhost:27017/songshare');
 // for heroku
 // var db = monk(process.env.MONGOLAB_URI);
 
-app.get('/', routes.index);
+app.get('/', routes.index(db));
 app.get('/userlist', routes.userlist(db));
 app.get('/inbox', routes.inbox(db));
 
 //listening room stuff
 app.post('/listen', routes.listen(db));
-app.get('/listeningroom/:id', routes.listeningRoom);
-app.get('/picksong', routes.picksong);
-app.get('/pickfriend', routes.pickfriend);
+app.get('/listeningroom/:id', routes.listeningRoom(db));
+app.get('/picksong', routes.picksong(db));
+app.get('/pickfriend', routes.pickfriend(db));
 app.get('/getVideoId/:roomId', routes.getVideoId(db));
 app.get('/user/:username', routes.user(db));
+app.get('/signup', routes.signup(db));
 
-app.get('/signup', user.signup);
 app.get('/logout', user.logout);
 app.post('/login', user.login(db));
 app.post('/adduser', user.adduser(db));

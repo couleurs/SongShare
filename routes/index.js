@@ -3,8 +3,13 @@
  * GET home page.
  */
 
- exports.index = function(req, res){
-  res.render('index', { title: 'SongShare', session: req.session });
+ exports.index = function(db) {
+  return function(req, res) {
+    loadUser(req.session.username, db, function(user) {
+      req.session.user = user;
+      res.render('index', { title: 'SongShare', db: db, session: req.session });
+    });
+  };
 }
 
 
@@ -12,7 +17,10 @@ exports.userlist = function(db) {
   return function(req, res) {
     var users = db.get('users');
     users.find({}, {}, function(e, docs) {
-      res.render('userlist', { title: 'Users', users: docs, session: req.session });
+      loadUser(req.session.username, db, function(user) {
+        req.session.user = user;
+        res.render('userlist', { title: 'Users', users: docs, db: db, session: req.session });
+      });
     });
   };
 }
@@ -21,7 +29,10 @@ exports.user = function(db){
   return function(req, res) {
     var users = db.get('users');
     users.findOne({'username': req.params.username}, {}, function(e, doc) {
-      res.render('user', { title: doc.username, profile: doc, session: req.session });
+      loadUser(req.session.username, db, function(user) {
+        req.session.user = user;
+        res.render('user', { title: doc.username, profile: doc, db: db, session: req.session });
+      });
     });
   }
 }
@@ -30,7 +41,10 @@ exports.inbox = function(db){
   return function(req, res) {
     var requests = db.get('songrequests');
     requests.find({receiver_name: req.session.user.username}, {}, function(e, docs) {
-      res.render('inbox', { title: 'Inbox', requests: docs, session: req.session });
+      loadUser(req.session.username, db, function(user) {
+        req.session.user = user;
+        res.render('inbox', { title: 'Inbox', requests: docs, db: db, session: req.session });
+      });
     });
   }
 }
@@ -68,8 +82,13 @@ exports.listen = function(db) {
   }
 };
 
-exports.listeningRoom = function(req, res){
-  res.render('listen', { title: 'Listen', videoId: req.query.videoId, session: req.session });
+exports.listeningRoom = function(db) {
+  return function(req, res){
+    loadUser(req.session.username, db, function(user) {
+      req.session.user = user;
+      res.render('listen', { title: 'Listen', videoId: req.query.videoId, db: db, session: req.session });
+    });
+  };
 }
 
 exports.getVideoId = function(db) {
@@ -85,10 +104,37 @@ exports.getVideoId = function(db) {
   }
 }
 
-exports.picksong = function(req, res){
-  res.render('picksong', { title: 'Pick Song', session: req.session });
+exports.picksong = function(db) {
+  return function(req, res){
+    loadUser(req.session.username, db, function(user) {
+      req.session.user = user;
+      res.render('picksong', { title: 'Pick Song', db: db, session: req.session });
+    });
+  };
 }
 
-exports.pickfriend = function(req, res){
-  res.render('pickfriend', { title: 'Pick Friend', videoId: req.query.videoId, session: req.session });
+exports.pickfriend = function(db) {
+  return function(req, res){
+    loadUser(req.session.username, db, function(user) {
+      req.session.user = user;
+      res.render('pickfriend', { title: 'Pick Friend', videoId: req.query.videoId, db: db, session: req.session });
+    });
+  };
 };
+
+exports.signup = function(db) {
+  return function(req, res){
+    loadUser(req.session.username, db, function(user) {
+      req.session.user = user;
+      res.render('signup', { title: 'Sign Up', db: db, session: req.session });
+    });
+  };
+}
+
+function loadUser(username, db, callback) {
+  var collection = db.get('users');
+  collection.findOne({'username': username}, {}, function(e, doc) {
+    if (callback) callback(doc);
+  });
+}
+
