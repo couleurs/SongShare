@@ -6,6 +6,9 @@ block content
       .col-xs-12
         img.img-responsive.img-circle                
       -if (session.user && profile.username != session.user.username)
+        .col-xs-3
+          div.profile-info
+            h2= profile.username
         -var friends = session.user.friends;
         -if (!friends || friends.indexOf(profile.username) == -1)
           .col-xs-12
@@ -28,16 +31,17 @@ block content
       - else if (session.user && profile.username == session.user.username)
         .col-xs-12
           h2 Pending Song Requests
-            each request, i in requests
-              .col-xs-3
-                img.img-responsive.img-circle(src='#{request.thumbnail_url}') 
-                h4= request.title  
-                //-a(href='google.com')button.btn.btn-info Go to listening room
+          each request, i in requests
+            .col-xs-12.col-lg-3.col-md-4
+              img.img-responsive(src='#{request.thumbnail_url}') 
+              h4= request.title  
+              a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Go to listening room with <b>#{request.requester_name}</b>
+
         .col-xs-12
           h2 Friends
           -var friends = session.user.friends;
            each friend, i in friends          
-            .col-xs-3
+            .col-xs-12.col-lg-3.col-md-4
               div.profile-info
                 h2= friend        
               form#formListenTogether(name='addfriend' method='post' action='/picksong' role='form')
