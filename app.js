@@ -3,6 +3,8 @@
 * Module dependencies.
 */
 
+'zMwEspe2bR0Spqo'
+
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
@@ -38,6 +40,9 @@ var db = monk('localhost:27017/songshare');
 // for heroku
 // var db = monk(process.env.MONGOLAB_URI);
 
+var nodemailer = require('nodemailer');
+
+
 app.get('/', routes.index(db));
 app.get('/userlist', routes.userlist(db));
 app.get('/inbox', routes.inbox(db));
@@ -53,7 +58,7 @@ app.get('/signup', routes.signup(db));
 
 app.get('/logout', user.logout);
 app.post('/login', user.login(db));
-app.post('/adduser', user.adduser(db));
+app.post('/adduser', user.adduser(db, nodemailer));
 
 app.post('/addfriend', friend.addfriend(db));
 app.post('/removefriend', friend.removefriend(db));

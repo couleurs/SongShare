@@ -60,7 +60,7 @@ exports.listen = function(db) {
             // If it failed, return error
             res.send("There was a problem adding the information to the database.");
         }
-        else {        
+        else {
             var reqcollection = db.get('songrequests');
             reqcollection.insert({
               "requester_name": req.session.user.username,
