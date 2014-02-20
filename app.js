@@ -7,6 +7,7 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var friend = require('./routes/friend');
+var listen = require('./routes/listen');
 var http = require('http');
 var path = require('path');
 var app = express();
@@ -46,12 +47,13 @@ app.get('/userlist', routes.userlist(db));
 app.get('/inbox', routes.inbox(db));
 
 //listening room stuff
-app.post('/listen', routes.listen(db, nodemailer));
 app.get('/listeningroom/:id', routes.listeningRoom(db));
 app.post('/picksong', routes.picksong(db));
 app.get('/getVideoId/:roomId', routes.getVideoId(db));
 app.get('/user/:username', routes.user(db));
 app.get('/signup', routes.signup(db));
+
+app.post('/listen', listen.listen(db, nodemailer));
 
 app.get('/logout', user.logout);
 app.post('/login', user.login(db));
