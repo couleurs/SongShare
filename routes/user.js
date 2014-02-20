@@ -9,7 +9,6 @@ exports.login = function(db) {
       if (doc) {
         if (doc.password == password) {
           req.session.username = username;
-          res.location('/user/' + username);
           res.redirect('/user/' + username);
         } else {
           res.send('incorrect password');

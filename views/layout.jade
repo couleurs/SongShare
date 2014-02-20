@@ -7,8 +7,10 @@ html(lang='en')
     title= title
     // Bootstrap
     link(href='/css/bootstrap.min.css', rel='stylesheet')
+    link(href='/css/bootstrap-switch.min.css', rel='stylesheet')
     link(href='/css/style.css', rel='stylesheet')
     script(src='https://code.jquery.com/jquery.js')
+    script(src='/js/bootstrap-switch.min.js')
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     // WARNING: Respond.js doesn't work if you view the page via file://
     //if lt IE 9
@@ -35,6 +37,7 @@ html(lang='en')
             li: a(href='/userlist') Explore Users            
           -if (session.user)
             ul.nav.navbar-nav.navbar-right
+              li: input#test-checkbox(type='checkbox' name='test-checkbox' checked data-size='small' data-label-text="<span class='glyphicon glyphicon-headphones'></span>" data-on-text='I' data-off-text='O' data-on-color='success' data-off-color='danger')
               li: a(href='/user/' + session.user.username) 
                 =session.user.username
               li: a(href='/inbox') Inbox
@@ -55,5 +58,5 @@ html(lang='en')
     // Include all compiled plugins (below), or include individual files as needed
     script(src='/js/bootstrap.min.js')
     script(src='/js/songsearch.js')
-    script(src="https://apis.google.com/js/client.js?onload=handleClientLoad")    
+    script(src="https://apis.google.com/js/client.js?onload=handleClientLoad")
 
