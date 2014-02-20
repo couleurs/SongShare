@@ -111,15 +111,6 @@ exports.picksong = function(db) {
   };
 }
 
-exports.pickfriend = function(db) {
-  return function(req, res){
-    loadUser(req.session.username, db, function(user) {
-      req.session.user = user;
-      res.render('pickfriend', { title: 'Pick Friend', videoId: req.query.videoId, db: db, session: req.session });
-    });
-  };
-};
-
 exports.signup = function(db) {
   return function(req, res){
     loadUser(req.session.username, db, function(user) {
