@@ -30,7 +30,10 @@ exports.user = function(db){
     users.findOne({'username': req.params.username}, {}, function(e, doc) {
       loadUser(req.session.username, db, function(user) {
         req.session.user = user;
-        res.render('user', { title: doc.username, profile: doc, db: db, session: req.session });
+        var requests = db.get('songrequests');
+        requests.find({receiver_name: req.session.user.username}, {}, function(e, docs) {          
+          res.render('user', { title: doc.username, profile: doc, requests: docs, db: db, session: req.session });
+        });
       });
     });
   }

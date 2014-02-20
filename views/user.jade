@@ -4,12 +4,7 @@ block content
   .container
     .row
       .col-xs-12
-        img.img-responsive.img-circle
-      .col-xs-12
-        div.profile-info
-          h2= profile.username
-        div.profile-history
-          h4 Recent songs          
+        img.img-responsive.img-circle                
       -if (session.user && profile.username != session.user.username)
         -var friends = session.user.friends;
         -if (!friends || friends.indexOf(profile.username) == -1)
@@ -30,5 +25,30 @@ block content
                 input.form-control(type='hidden' name='username' value=profile.username)
               button.btn.btn-danger(type='submit') Remove friend    
 
-      //- - else if (session.user && profile.username == session.user.username)
-      //-   -var friends = session.user.friends;
+      - else if (session.user && profile.username == session.user.username)
+        .col-xs-12
+          h2 Pending Song Requests
+            each request, i in requests
+              .col-xs-3
+                img.img-responsive.img-circle(src='#{request.thumbnail_url}') 
+                h4= request.title  
+                //-a(href='google.com')button.btn.btn-info Go to listening room
+        .col-xs-12
+          h2 Friends
+          -var friends = session.user.friends;
+           each friend, i in friends          
+            .col-xs-3
+              div.profile-info
+                h2= friend        
+              form#formListenTogether(name='addfriend' method='post' action='/picksong' role='form')
+                .form-group
+                  input.form-control(type='hidden' name='username' value=friend)
+                button.btn.btn-info(type='submit') Listen together
+              form#formRemoveFriend(name='removefriend' method='post' action='/removefriend' role='form')
+                .form-group
+                  input.form-control(type='hidden' name='username' value=friend)
+                button.btn.btn-danger(type='submit') Remove friend
+
+        .col-xs-12
+          h2 History
+            

@@ -17,7 +17,9 @@ exports.listen = function(db, nodemailer) {
               "requester_name": req.session.user.username,
               "receiver_name": req.body.username,
               "listeningroom_id": doc._id,
-              "video_id": doc.video_id
+              "video_id": doc.video_id,
+              "thumbnail_url": req.body.thumbnail_url,
+              "title": req.body.video_title
             }, function(err, doc2) {
               if (err) {
                 console.log("ERROR is " + err);
