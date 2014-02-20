@@ -22,7 +22,12 @@ block content
               button.btn.btn-success(type='submit') Add friend
         -else
           .col-xs-12
+            form#formListenTogether(name='addfriend' method='post' action='/picksong' role='form')
+              .form-group
+                input.form-control(type='hidden' name='username' value=profile.username)
+              button.btn.btn-info(type='submit') Listen together
+          .col-xs-12
             form#formRemoveFriend(name='removefriend' method='post' action='/removefriend' role='form')
               .form-group
                 input.form-control(type='hidden' name='username' value=profile.username)
-              button.btn.btn-danger(type='submit') Remove friend
+              button.btn.btn-danger(type='submit') Remove friend          

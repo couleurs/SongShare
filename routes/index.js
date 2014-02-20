@@ -1,4 +1,4 @@
-
+  
 /*
  * GET home page.
  */
@@ -11,7 +11,6 @@
     });
   };
 }
-
 
 exports.userlist = function(db) {
   return function(req, res) {
@@ -54,7 +53,7 @@ exports.listen = function(db) {
     var collection = db.get('listeningrooms');
 
     collection.insert({
-        "video_id": req.body.videoid
+        "video_id": req.body.video_id
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -100,7 +99,6 @@ exports.getVideoId = function(db) {
       listeningrooms.findOne({"_id": roomId}, {}, function(e, doc) {
         res.json(doc);
       });
-
   }
 }
 
@@ -108,7 +106,7 @@ exports.picksong = function(db) {
   return function(req, res){
     loadUser(req.session.username, db, function(user) {
       req.session.user = user;
-      res.render('picksong', { title: 'Pick Song', db: db, session: req.session });
+      res.render('picksong', { title: 'Pick Song', receiver_username: req.body.username, session: req.session });
     });
   };
 }
