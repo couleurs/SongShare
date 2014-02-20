@@ -13,8 +13,8 @@ exports.login = function(db) {
       if (doc) {
         if (doc.password == password) {
           req.session.user = doc;
-          res.location('/');
-          res.redirect('/');
+          res.location('/user/' + username);
+          res.redirect('/user/' + username);
         } else {
           res.send('incorrect password');
         }
@@ -50,10 +50,11 @@ exports.adduser = function(db) {
         res.send('There was a problem adding the information to the database.');
       }
       else {
+        req.session.user = doc;
         // If it worked, set the header so the address bar doesn't still say /adduser
-        res.location('/userlist');
+        res.location('/user/' + username);
         // And forward to success page
-        res.redirect('/userlist');
+        res.redirect('/user/' + username);
       }
     });
   }
