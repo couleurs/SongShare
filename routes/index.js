@@ -53,7 +53,9 @@ exports.listen = function(db) {
     var collection = db.get('listeningrooms');
 
     collection.insert({
-        "video_id": req.body.video_id
+        "video_id": req.body.video_id,
+        "thumbnail_url": req.body.thumbnail_url,
+        "title": req.body.video_title
     }, function (err, doc) {
         if (err) {
             // If it failed, return error

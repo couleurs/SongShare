@@ -49,7 +49,6 @@ app.get('/inbox', routes.inbox(db));
 app.post('/listen', routes.listen(db));
 app.get('/listeningroom/:id', routes.listeningRoom(db));
 app.post('/picksong', routes.picksong(db));
-app.get('/pickfriend', routes.pickfriend(db));
 app.get('/getVideoId/:roomId', routes.getVideoId(db));
 app.get('/user/:username', routes.user(db));
 app.get('/signup', routes.signup(db));

@@ -28,4 +28,7 @@ block content
             form#formRemoveFriend(name='removefriend' method='post' action='/removefriend' role='form')
               .form-group
                 input.form-control(type='hidden' name='username' value=profile.username)
-              button.btn.btn-danger(type='submit') Remove friend          
+              button.btn.btn-danger(type='submit') Remove friend    
+
+      //- - else if (session.user && profile.username == session.user.username)
+      //-   -var friends = session.user.friends;
