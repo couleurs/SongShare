@@ -46,12 +46,13 @@ function sendRequestEmail(request, url, db, nodemailer) {
               pass: 'zMwEspe2bR0Spqo'
           }
       });
-
+      var htmlstr = '<p>Click <a href="' + url + '">here</a> to listen with ' + request.requester_name + '.</p>' + url;
+      console.log(htmlstr);
       var mailOptions = {
           from: "SongShare <songshare147@gmail.com>", // sender address
           to: doc.email, // list of receivers
           subject: request.requester_name + " has shared a song with you!", // Subject line
-          html: '<p>Click <a href="' + url + '">here</a> to listen with ' + request.requester_name + '.</p>' + url
+          html: htmlstr
       }
 
       smtpTransport.sendMail(mailOptions, function(error, response){
