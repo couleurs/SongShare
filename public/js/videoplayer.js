@@ -40,7 +40,7 @@ function onYouTubeIframeAPIReady() {
 
 // for local testing
 //var socket = io.connect('http://localhost/listen');
-for heroku
+//for heroku
 var socket = io.connect('https://songshare147.herokuapp.com/listen');
 
 function onPlayerReady(event) {
