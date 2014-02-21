@@ -42,7 +42,7 @@ html(lang='en')
                 =session.user.username
               li: a(href='/inbox') Inbox
               li: a(href='/logout') Log Out
-            .navbar-text.navbar-right: input#availability-toggle(type='checkbox' name='test-checkbox' checked data-size='small' data-label-text="<span class='glyphicon glyphicon-headphones'></span>" data-on-text='I' data-off-text='O' data-on-color='success' data-off-color='danger')
+            //- .navbar-text.navbar-right: input#availability-toggle(type='checkbox' name='test-checkbox' checked data-size='small' data-label-text="<span class='glyphicon glyphicon-headphones'></span>" data-on-text='I' data-off-text='O' data-on-color='success' data-off-color='danger')
           -else
             form#formLogin.navbar-form.navbar-right(name='login' method='post' action='/login' role='form')
               .form-group

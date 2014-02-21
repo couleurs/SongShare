@@ -9,6 +9,10 @@ block content
         .col-xs-3
           div.profile-info
             h2= profile.username
+            if (profile.available)
+              h5.user-status.user-online online
+            else
+              h5.user-status.user-offline offline
         -var friendNames = session.user.friends;
         -if (!friendNames || friendNames.indexOf(profile.username) == -1)
           .col-xs-12
@@ -32,21 +36,22 @@ block content
         .col-xs-12
           h2 Pending Song Requests
           each request, i in requests
-            .col-xs-12.col-lg-3.col-md-4
-              img.img-responsive(src='#{request.thumbnail_url}') 
-              h4= request.title  
-              a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <b>#{request.requester_name}</b>
+            if (request.active)
+              .col-xs-12.col-md-4.col.xl-3
+                img.img-responsive(src='#{request.thumbnail_url}') 
+                h4= request.title  
+                a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <b>#{request.requester_name}</b>
 
         .col-xs-12
-          h2.col-xs-12 Friends
+          h2 Friends
           each friend, i in friends          
             .col-xs-12.col-lg-3.col-md-4
               div.profile-info
                 h2= friend.username
                 if (friend.available)
-                  h5.friend-status.friend-online online
+                  h5.user-status.user-online online
                 else
-                  h5.friend-status.friend-offline offline
+                  h5.user-status.user-offline offline
               form#formListenTogether(name='addfriend' method='post' action='/picksong' role='form')
                 .form-group
                   input.form-control(type='hidden' name='username' value=friend)
@@ -58,4 +63,8 @@ block content
 
         .col-xs-12
           h2 History
-            
+          each request, i in requests
+            if (!request.active)
+              .col-xs-12.col-md-4.col.xl-3
+                h4= request.title
+                h5= request.requester_name

@@ -40,14 +40,14 @@ a {
 	bottom: -20px;
 }
 
-.friend-status {
+.user-status {
   opacity: 0.5;
 }
 
-.friend-online {
+.user-online {
   color: green;
 }
 
-.friend-offline {
+.user-offline {
   color: red;
 }
