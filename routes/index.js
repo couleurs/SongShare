@@ -38,7 +38,7 @@ exports.user = function(db){
         req.session.user = user;
         var requests = db.get('songrequests');
         if (user)
-          requests.find({receiver_name: user.username}, {}, function(e, requests) {    
+          requests.find({$or: [ {receiver_name: user.username}, {requester_name: user.username}]}, {}, function(e, requests) {    
             users.find({username: {$in: user.friends}}, {}, function(e, friends) {
               res.render('user', { title: doc.username, profile: doc, requests: requests, friends: friends, db: db, session: req.session });
             });
