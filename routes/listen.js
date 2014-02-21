@@ -19,7 +19,8 @@ exports.listen = function(db, nodemailer) {
               "listeningroom_id": doc._id,
               "video_id": doc.video_id,
               "thumbnail_url": req.body.thumbnail_url,
-              "title": req.body.video_title
+              "title": req.body.video_title,
+              "active": "1"            
             }, function(err, doc2) {
               if (err) {
                 console.log("ERROR is " + err);
@@ -36,6 +37,20 @@ exports.listen = function(db, nodemailer) {
     });
   }
 };
+
+exports.expire = function(db) {
+  return function(req, res){    
+    var collection = db.get('songrequests');
+    console.log("EXPIRE");
+    console.log(req.params.listeningroom_id);
+    collection.update(      
+      { listeningroom_id: req.params.listeningroom_id },
+      { $set : {active: "0" }},
+      {}
+    );
+    res.json("OK");
+  }
+}
 
 function sendRequestEmail(request, url, db, nodemailer) {
   var users = db.get('users');

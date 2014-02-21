@@ -52,7 +52,7 @@ app.post('/picksong', routes.picksong(db));
 app.get('/getVideoId/:roomId', routes.getVideoId(db));
 app.get('/user/:username', routes.user(db));
 app.get('/signup', routes.signup(db));
-
+app.get('/expireroom/:listeningroom_id', listen.expire(db));
 app.post('/listen', listen.listen(db, nodemailer));
 
 app.get('/logout', user.logout);

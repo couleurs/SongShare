@@ -38,7 +38,7 @@ exports.user = function(db){
         req.session.user = user;
         var requests = db.get('songrequests');
         if (user)
-          requests.find({receiver_name: req.session.user.username}, {}, function(e, docs) {          
+          requests.find({receiver_name: req.session.user.username, active: "1"}, {}, function(e, docs) {          
             res.render('user', { title: doc.username, profile: doc, requests: docs, db: db, session: req.session });
           });
         else
@@ -64,7 +64,8 @@ exports.listeningRoom = function(db) {
   return function(req, res){
     loadUser(req.session.username, db, function(user) {
       req.session.user = user;
-      res.render('listen', { title: 'Listen', videoId: req.query.videoId, db: db, session: req.session });
+      console.log(req.params.id);
+      res.render('listen', { title: 'Listen', listeningroom_id: req.params.id, videoId: req.query.videoId, db: db, session: req.session });
     });
   };
 }

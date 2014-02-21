@@ -6,25 +6,31 @@ var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var ytVideoId;
+var listeningroom_id;
 var fetchVideoId;
+
+//setup functions
+var onIframeReady;
+var onDocumentReady;
 var secondConnection = false;
-var onSecondConnection;
+var documentReady = false;
 
 $( document ).ready(function() {
-  ytVideoId = $('#player').data('videoid');
-  if (secondConnection) {
-  	console.log("called from second connection");
-  	onSecondConnection(ytVideoId);
-  }
+	ytVideoId = $('#player').data('videoid');
+	listeningroom_id = $('#player').data('listeningroomid');	  
+	documentReady = true;
+
+	if (secondConnection && onIframeReady)
+		onIframeReady(ytVideoId);
 });
 
 //creates player
 var player;
-var onIframeReady;
 
 function onYouTubeIframeAPIReady() {	
   	onIframeReady = function(videoId) {  
-  		console.log(videoId);	
+  		console.log(videoId);
+  		$.get('/expireroom/'+listeningroom_id, function(data){ console.log("success"); });	
 	  	player = new YT.Player('player', {
 	    height: '182',
 	    width: '300',
@@ -33,8 +39,12 @@ function onYouTubeIframeAPIReady() {
 	    events: {
 	      'onReady': onPlayerReady,
 	      'onStateChange': onPlayerStateChange
-	    }
+	    }	      
 	  });	  
+	}
+
+	if (secondConnection && documentReady) {		
+		onIframeReady(ytVideoId);
 	}	
 }
 
@@ -43,7 +53,7 @@ var socket = io.connect('http://localhost/listen');
 //for heroku
 //var socket = io.connect('https://songshare147.herokuapp.com/listen');
 
-function onPlayerReady(event) {
+function onPlayerReady(event) {	
 	player.playVideo();
 }
 
@@ -67,15 +77,10 @@ socket.on('connections', function (data) {
 	console.log(data.connections);
 	if (data.connections > 1) {		
 		secondConnection = true;	
-		console.log(ytVideoId);	
-		if (ytVideoId) {			
-			onIframeReady(ytVideoId);
-		}
-		else {
-			onSecondConnection = function(videoId) {
-				console.log("called");
-				onIframeReady(videoId);
-			}
+
+		if (secondConnection && documentReady) {
+			if (onIframeReady)
+				onIframeReady(ytVideoId);
 		}
 	}
 });
