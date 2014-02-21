@@ -16,7 +16,7 @@ exports.listen = function(db, nodemailer) {
             reqcollection.insert({
               "requester_name": req.session.user.username,
               "receiver_name": req.body.username,
-              "listeningroom_id": doc._id,
+              "listeningroom_id": doc._id.toString(),
               "video_id": doc.video_id,
               "thumbnail_url": req.body.thumbnail_url,
               "title": req.body.video_title,
@@ -40,14 +40,14 @@ exports.listen = function(db, nodemailer) {
 
 exports.expire = function(db) {
   return function(req, res){    
-    var collection = db.get('songrequests');
-    console.log("EXPIRE");
-    console.log(req.params.listeningroom_id);
+    var collection = db.get('songrequests');    
+
     collection.update(      
       { listeningroom_id: req.params.listeningroom_id },
       { $set : {active: "0" }},
       {}
     );
+    
     res.json("OK");
   }
 }
