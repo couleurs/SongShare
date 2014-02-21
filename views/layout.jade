@@ -37,11 +37,11 @@ html(lang='en')
             li: a(href='/userlist') Explore Users            
           -if (session.user)
             ul.nav.navbar-nav.navbar-right
-              li: input#test-checkbox(type='checkbox' name='test-checkbox' checked data-size='small' data-label-text="<span class='glyphicon glyphicon-headphones'></span>" data-on-text='I' data-off-text='O' data-on-color='success' data-off-color='danger')
               li: a(href='/user/' + session.user.username) 
                 =session.user.username
               li: a(href='/inbox') Inbox
               li: a(href='/logout') Log Out
+            .navbar-text.navbar-right: input#availability-toggle(type='checkbox' name='test-checkbox' checked data-size='small' data-label-text="<span class='glyphicon glyphicon-headphones'></span>" data-on-text='I' data-off-text='O' data-on-color='success' data-off-color='danger')
           -else
             form#formLogin.navbar-form.navbar-right(name='login' method='post' action='/login' role='form')
               .form-group
@@ -54,6 +54,8 @@ html(lang='en')
 
     .container
       block content
+    script
+      $("#availability-toggle").bootstrapSwitch();
     // jQuery (necessary for Bootstrap's JavaScript plugins)    
     // Include all compiled plugins (below), or include individual files as needed
     script(src='/js/bootstrap.min.js')
