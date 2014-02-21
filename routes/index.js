@@ -38,11 +38,13 @@ exports.user = function(db){
         req.session.user = user;
         var requests = db.get('songrequests');
         if (user)
-          requests.find({receiver_name: req.session.user.username, active: "1"}, {}, function(e, docs) {          
-            res.render('user', { title: doc.username, profile: doc, requests: docs, db: db, session: req.session });
+          requests.find({receiver_name: req.session.user.username, active: "1"}, {}, function(e, requests) {    
+            users.find({username: {$in: user.friends}}, {}, function(e, friends) {
+              res.render('user', { title: doc.username, profile: doc, requests: requests, friends: friends, db: db, session: req.session });
+            });
           });
         else
-          res.render('user', { title: doc.username, profile: doc, requests: [], db: db, session: req.session });
+          res.render('user', { title: doc.username, profile: doc, requests: [], friends: [], db: db, session: req.session });
       });
     });
   }

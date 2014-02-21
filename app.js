@@ -35,9 +35,9 @@ var mongo = require('mongodb');
 var monk = require('monk');
 
 // for local testing
-// var db = monk('localhost:27017/songshare'); 
+var db = monk('localhost:27017/songshare'); 
 // for heroku
-var db = monk(process.env.MONGOLAB_URI);
+// var db = monk(process.env.MONGOLAB_URI);
 
 var nodemailer = require('nodemailer');
 
@@ -57,7 +57,7 @@ app.get('/signup', routes.signup(db));
 app.get('/expireroom/:listeningroom_id', listen.expire(db));
 app.post('/listen', listen.listen(db, nodemailer));
 
-app.get('/logout', user.logout);
+app.get('/logout', user.logout(db));
 app.post('/login', user.login(db));
 app.post('/adduser', user.adduser(db, nodemailer));
 

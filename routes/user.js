@@ -3,11 +3,12 @@ exports.login = function(db) {
     var username = req.body.username;
     var password = req.body.password;
 
-    var collection = db.get('users');
+    var users = db.get('users');
 
-    collection.findOne({'username': username}, {}, function(e, doc) {
+    users.findOne({'username': username}, {}, function(e, doc) {
       if (doc) {
         if (doc.password == password) {
+          setAvailability(username, true, db);
           req.session.username = username;
           res.redirect('/user/' + username);
         } else {
@@ -20,11 +21,14 @@ exports.login = function(db) {
   }
 }
 
-exports.logout = function(req, res) {
-  req.session.username = null;
-  req.session.user = null;
-  res.location('/');
-  res.redirect('/');
+exports.logout = function(db) {
+  return function(req, res) {
+    setAvailability(req.session.username, false, db);
+    req.session.username = null;
+    req.session.user = null;
+    res.location('/');
+    res.redirect('/');
+  }
 }
 
 exports.adduser = function(db, nodemailer) {
@@ -33,9 +37,9 @@ exports.adduser = function(db, nodemailer) {
     var email = req.body.email;
     var password = req.body.password;
 
-    var collection = db.get('users');
+    var users = db.get('users');
 
-    collection.insert({
+    users.insert({
       'username': username,
       'email': email,
       'password': password,
@@ -46,12 +50,21 @@ exports.adduser = function(db, nodemailer) {
       }
       else {
         sendWelcomeEmail(doc, nodemailer);
+        setAvailability(username, true, db);
         req.session.username = username;
         res.location('/user/' + username);
         res.redirect('/user/' + username);
       }
     });
   }
+}
+
+function setAvailability(username, value, db) {
+  var users = db.get('users');
+  users.update(
+    { username: username },
+    { $set: { available: value }},
+    {});
 }
 
 function sendWelcomeEmail(user, nodemailer) {

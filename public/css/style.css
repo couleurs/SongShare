@@ -39,3 +39,15 @@ a {
 	position: relative;
 	bottom: -20px;
 }
+
+.friend-status {
+  opacity: 0.5;
+}
+
+.friend-online {
+  color: green;
+}
+
+.friend-offline {
+  color: red;
+}

@@ -9,8 +9,8 @@ block content
         .col-xs-3
           div.profile-info
             h2= profile.username
-        -var friends = session.user.friends;
-        -if (!friends || friends.indexOf(profile.username) == -1)
+        -var friendNames = session.user.friends;
+        -if (!friendNames || friendNames.indexOf(profile.username) == -1)
           .col-xs-12
             form#formAddFriend(name='addfriend' method='post' action='/addfriend' role='form')
               .form-group
@@ -35,15 +35,18 @@ block content
             .col-xs-12.col-lg-3.col-md-4
               img.img-responsive(src='#{request.thumbnail_url}') 
               h4= request.title  
-              a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Go to listening room with <b>#{request.requester_name}</b>
+              a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <b>#{request.requester_name}</b>
 
         .col-xs-12
-          h2 Friends
-          -var friends = session.user.friends;
-           each friend, i in friends          
+          h2.col-xs-12 Friends
+          each friend, i in friends          
             .col-xs-12.col-lg-3.col-md-4
               div.profile-info
-                h2= friend        
+                h2= friend.username
+                if (friend.available)
+                  h5.friend-status.friend-online online
+                else
+                  h5.friend-status.friend-offline offline
               form#formListenTogether(name='addfriend' method='post' action='/picksong' role='form')
                 .form-group
                   input.form-control(type='hidden' name='username' value=friend)

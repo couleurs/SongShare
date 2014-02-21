@@ -9,6 +9,7 @@ html(lang='en')
     link(href='/css/bootstrap.min.css', rel='stylesheet')
     link(href='/css/bootstrap-switch.min.css', rel='stylesheet')
     link(href='/css/style.css', rel='stylesheet')
+
     script(src='https://code.jquery.com/jquery.js')
     script(src='/js/bootstrap-switch.min.js')
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
@@ -54,11 +55,18 @@ html(lang='en')
 
     .container
       block content
-    script
+    script.
       $("#availability-toggle").bootstrapSwitch();
+      $("#availability-toggle").on('switchChange', function (e, data) {
+        var $element = $(data.el),
+              value = data.value;
+        changeAvailability(session.username, value, db);
+        alert(value);
+      });
     // jQuery (necessary for Bootstrap's JavaScript plugins)    
     // Include all compiled plugins (below), or include individual files as needed
     script(src='/js/bootstrap.min.js')
     script(src='/js/songsearch.js')
+    script(src='/js/availability.js')
     script(src="https://apis.google.com/js/client.js?onload=handleClientLoad")
 
