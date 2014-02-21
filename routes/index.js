@@ -66,8 +66,13 @@ exports.listeningRoom = function(db) {
   return function(req, res){
     loadUser(req.session.username, db, function(user) {
       req.session.user = user;
-      console.log(req.params.id);
-      res.render('listen', { title: 'Listen', listeningroom_id: req.params.id, videoId: req.query.videoId, db: db, session: req.session });
+      var collection = db.get('songrequests');
+
+      collection.findOne({listeningroom_id: req.params.id}, {}, function(e,doc){
+        var partnerName = (user.username == doc.receiver_name) ? doc.requester_name : doc.receiver_name;                              
+        res.render('listen', { title: 'Listen', listeningroom_id: req.params.id, videoId: req.query.videoId, partner_name: partnerName, db: db, session: req.session });  
+      })
+      
     });
   };
 }

@@ -6,7 +6,7 @@ var receiver_name;
 function handleClientLoad() {
   gapi.client.setApiKey(apiKey);
   gapi.client.load('youtube', 'v3', function() {
-    receiver_name = $('#receiver').data('name');    
+    receiver_name = $('#receiver').data('name');
     authReady();
   });
 };
