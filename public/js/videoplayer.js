@@ -5,6 +5,28 @@ tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+//figure out what the device is
+var isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+};
+
 var ytVideoId;
 var listeningroom_id;
 var fetchVideoId;
@@ -54,6 +76,7 @@ function onYouTubeIframeAPIReady() {
 var socket = io.connect('https://songshare147.herokuapp.com/listen');
 
 function onPlayerReady(event) {	
+	if (isMobile.iOS()) return;
 	player.playVideo();
 }
 
@@ -66,10 +89,12 @@ function onPlayerStateChange(event) {
 }
 
 socket.on('pauseplayer', function (data) {
+	if (isMobile.iOS()) return;
 	player.pauseVideo();
 });
 
 socket.on('playplayer', function (data) {
+	if (isMobile.iOS()) return;
 	player.playVideo();
 });
 
