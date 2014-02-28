@@ -54,8 +54,8 @@ function onYouTubeIframeAPIReady() {
   		console.log(videoId);
   		$.get('/expireroom/'+listeningroom_id, function(data){ console.log("success"); });	
 	  	player = new YT.Player('player', {
-	    height: '182',
-	    width: '300',
+	    height: '158',
+	    width: '260',
 	    videoId: videoId,
 	    playerVars: { /*'controls': 0 */},
 	    events: {
@@ -71,9 +71,9 @@ function onYouTubeIframeAPIReady() {
 }
 
 // for local testing
-//var socket = io.connect('http://localhost/listen');
+var socket = io.connect('http://localhost/listen');
 //for heroku
-var socket = io.connect('https://songshare147.herokuapp.com/listen');
+// var socket = io.connect('https://songshare147.herokuapp.com/listen');
 
 function onPlayerReady(event) {	
 	if (isMobile.iOS()) return;

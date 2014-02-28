@@ -35,9 +35,9 @@ var mongo = require('mongodb');
 var monk = require('monk');
 
 // for local testing
-//var db = monk('localhost:27017/songshare'); 
+var db = monk('localhost:27017/songshare'); 
 // for heroku
-var db = monk(process.env.MONGOLAB_URI);
+// var db = monk(process.env.MONGOLAB_URI);
 
 var nodemailer = require('nodemailer');
 
@@ -46,7 +46,9 @@ var less = require('less');
 
 app.get('/', routes.index(db));
 app.get('/userlist', routes.userlist(db));
-app.get('/inbox', routes.inbox(db));
+app.get('/requests', routes.requests(db));
+app.get('/friends', routes.friends(db));
+app.get('/history', routes.historyPage(db));
 
 //listening room stuff
 app.get('/listeningroom/:id', routes.listeningRoom(db));

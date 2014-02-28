@@ -34,16 +34,23 @@ block content
 
       - else if (session.user && profile.username == session.user.username)
         .col-xs-12
-          h2 Pending Song Requests
+          a(href='/requests'): h2 Pending song requests
+          - var numPendingRequests = 0;
           each request, i in requests
             if (request.receiver_name == session.user.username && request.active == 1)
+              - numPendingRequests++;
               .col-xs-12.col-md-4.col.xl-3
                 img.img-responsive(src='#{request.thumbnail_url}') 
                 h4= request.title  
                 a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <b>#{request.requester_name}</b>
+          if (numPendingRequests == 0)
+            p You don't have any pending requests.
 
         .col-xs-12
-          h2 Friends
+          hr
+
+        .col-xs-12
+          a(href='/friends'): h2 Friends
           each friend, i in friends          
             .col-xs-12.col-lg-3.col-md-4
               div.profile-info
@@ -60,11 +67,19 @@ block content
                 .form-group
                   input.form-control(type='hidden' name='username' value=friend.username)
                 button.btn.btn-danger(type='submit') Remove friend
+          if (friends.length == 0)
+            a(href='/userlist'): p Go add some friends!
 
         .col-xs-12
-          h2 History
-          each request, i in requests
-            if (request.active == 0)
+          hr
+
+        .col-xs-12
+          a(href='/history'): h2 History
+          - var numHistory = 0;
+          - for (var i = requests.length - 1; i >= 0; i--)
+            - var request = requests[i]
+            if (request.active == 0 && numHistory < 3)
+              - numHistory++;
               .col-xs-12.col-md-4.col.xl-3
                 h4: a(href='http://youtu.be/' + request.video_id)= request.title
                 if (request.requester_name == session.user.username)
@@ -73,7 +88,8 @@ block content
                 else
                   h5 Listened with  
                     =request.requester_name
-
+          if (numHistory == 0)
+            p You haven't listened to anything yet.
 
 
 

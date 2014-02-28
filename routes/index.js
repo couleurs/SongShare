@@ -15,10 +15,22 @@
 exports.userlist = function(db) {
   return function(req, res) {
     var users = db.get('users');
-    users.find({}, {}, function(e, docs) {
-      loadUser(req.session.username, db, function(user) {
+    loadUser(req.session.username, db, function(user) {
+      users.find({username: {$nin: user.friends}}, {}, function(e, docs) {
         req.session.user = user;
         res.render('userlist', { title: 'Users', users: docs, db: db, session: req.session });
+      });
+    });
+  };
+}
+
+exports.friends = function(db) {
+  return function(req, res) {
+    var users = db.get('users');
+    loadUser(req.session.username, db, function(user) {
+      users.find({username: {$in: user.friends}}, {}, function(e, docs) {
+        req.session.user = user;
+        res.render('friends', { title: 'Friends', friends: docs, db: db, session: req.session });
       });
     });
   };
@@ -50,13 +62,26 @@ exports.user = function(db){
   }
 }
 
-exports.inbox = function(db){
+exports.requests = function(db){
   return function(req, res) {
     var requests = db.get('songrequests');
-    requests.find({receiver_name: req.session.user.username}, {}, function(e, docs) {
+    requests.find({$and: [{receiver_name: req.session.user.username}, {active: '1'}]}, {}, function(e, docs) {
       loadUser(req.session.username, db, function(user) {
         req.session.user = user;
-        res.render('inbox', { title: 'Inbox', requests: docs, db: db, session: req.session });
+        res.render('requests', { title: 'Requests', requests: docs, db: db, session: req.session });
+      });
+    });
+  }
+}
+
+exports.historyPage = function(db){
+  return function(req, res) {
+    var requests = db.get('songrequests');
+    var user = req.session.user;
+    requests.find({$and: [{$or: [ {receiver_name: user.username}, {requester_name: user.username} ]}, {active: '0'} ]}, {}, function(e, docs) {
+      loadUser(req.session.username, db, function(user) {
+        req.session.user = user;
+        res.render('history', { title: 'History', requests: docs, db: db, session: req.session });
       });
     });
   }

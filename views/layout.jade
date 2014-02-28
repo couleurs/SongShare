@@ -32,15 +32,15 @@ html(lang='en')
         .navbar-collapse.collapse
           ul.nav.navbar-nav
             -if (session.user)
-              li: a(href='/user/'+session.user.username) Home
+              li: a(href='/requests') Requests
+              li: a(href='/friends') Friends
+              li: a(href='/history') History
             -else
-              li: a(href='/') Home
-            li: a(href='/userlist') Explore Users            
+              li: a(href='/') Home           
           -if (session.user)
             ul.nav.navbar-nav.navbar-right
               li: a(href='/user/' + session.user.username) 
                 =session.user.username
-              li: a(href='/inbox') Inbox
               li: a(href='/logout') Log Out
             //- .navbar-text.navbar-right: input#availability-toggle(type='checkbox' name='test-checkbox' checked data-size='small' data-label-text="<span class='glyphicon glyphicon-headphones'></span>" data-on-text='I' data-off-text='O' data-on-color='success' data-off-color='danger')
           -else

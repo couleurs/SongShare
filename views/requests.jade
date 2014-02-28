@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  .container
+    h1 Requests
+
+  .container
+    .row
+      each request, i in requests
+        .col-xs-12.col-md-4.col.xl-3
+          img.img-responsive(src='#{request.thumbnail_url}') 
+          h4= request.title  
+          a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <b>#{request.requester_name}</b>
