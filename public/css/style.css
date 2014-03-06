@@ -51,6 +51,11 @@ a {
   top:-9px;
 }
 
+.remove-friend-button {
+  position:relative;
+  top:6px;
+}
+
 .dashboard-share {
   position:relative;
   top:-8px;

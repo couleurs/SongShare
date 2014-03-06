@@ -16,6 +16,7 @@ block content
                 a.btn.btn-sm.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <strong>#{request.requester_name}</strong>
         if (numPendingRequests == 0)
           h5 No one is sharing with you right now
+          
 
 
       .col-xs-12
@@ -33,13 +34,6 @@ block content
                       small.user-status.user-online
                         span.glyphicon.glyphicon-user
                       =friend.username
-                  .col-xs-3.col-xs-offset-3
-                    form.pull-right.dashboard-share#formListenTogether(name='picksong' method='post' action='/picksong' role='form')
-                      .form-group
-                        input.form-control(type='hidden' name='username' value=friend.username)
-                      button.btn.btn-xs.btn-warning(type='submit')
-                        span.glyphicon.glyphicon-headphones
-                        span &nbsp; Share
         if (friends.length == 0)
           a(href='/friends'): h5 Go add some friends!
         else if (numOnlineFriends == 0)

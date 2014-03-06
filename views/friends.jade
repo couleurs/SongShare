@@ -6,29 +6,23 @@ block content
       .row
         each friend, i in friends
           .col-xs-12.col-lg-3.col-md-4
-            if (friend.available)
-              h3
-                small.user-status.user-online
-                  span.glyphicon.glyphicon-user
-                =friend.username
-            else
-              h3
-                small.user-status.user-offline
-                  span.glyphicon.glyphicon-user
-                =friend.username
             .row
-              .col-xs-3
-                form#formListenTogether(name='addfriend' method='post' action='/picksong' role='form')
-                  .form-group
-                    input.form-control(type='hidden' name='username' value=friend.username)
-                  button.btn.btn-sm.btn-warning(type='submit')
-                    span.glyphicon.glyphicon-headphones
-                    span &nbsp; Share
-              .col-xs-3.col-xs-offset-6
+              .col-xs-8
+                if (friend.available)
+                  h3
+                    small.user-status.user-online
+                      span.glyphicon.glyphicon-user
+                    =friend.username
+                else
+                  h3
+                    small.user-status.user-offline
+                      span.glyphicon.glyphicon-user
+                    =friend.username
+              .col-xs-3.col-xs-offset-1
                 form.pull-right#formRemoveFriend(name='removefriend' method='post' action='/removefriend' role='form')
                   .form-group
                     input.form-control(type='hidden' name='username' value=friend.username)
-                  button.btn.btn-sm.btn-danger(type='submit')
+                  button.btn.btn-xs.btn-danger.remove-friend-button(type='submit')
                     span.glyphicon.glyphicon-remove
             hr
       .row
