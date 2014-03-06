@@ -4,6 +4,8 @@ html(lang='en')
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='apple-mobile-web-app-capable' content='yes')
+    meta(name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;")
     title= title
     // Bootstrap
     link(href='/css/bootstrap.min.css', rel='stylesheet')
@@ -22,25 +24,27 @@ html(lang='en')
     // navbar
     nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .navbar-header
-        -if (session.user)
-          a.navbar-link.pull-left(onclick='window.history.back()')
-            span.glyphicon.glyphicon-chevron-left
-        a.navbar-brand(href='#')= title
-        -if (session.user)
-          a.navbar-link.pull-right(href='/logout')
-            span.glyphicon.glyphicon-remove-circle
+        .container
+          -if (session.user)
+            a.navbar-link.pull-left(onclick='window.history.back()')
+              span.glyphicon.glyphicon-chevron-left
+          a.navbar-brand(href='#')= title
+          -if (session.user)
+            a.navbar-link.pull-right(href='/logout')
+              span.glyphicon.glyphicon-off
 
     .container
       block content
 
     nav.navbar.navbar-inverse.navbar-fixed-bottom(role='navigation')
-      -if (session.user)
-        .navbar-header
-          ul.nav.nav-pills
-            li.active: a(href='/user/' + session.user.username): span.glyphicon.glyphicon-dashboard
-            li.active: a(href='/requests'): span.glyphicon.glyphicon-inbox
-            li.active: a(href='/friends'): span.glyphicon.glyphicon-user
-            li.active: a(href='/history'): span.glyphicon.glyphicon-bookmark
+      .container
+        -if (session.user)
+          .navbar-header
+            ul.nav.nav-pills
+              li.active: a(href='/user/' + session.user.username): span.glyphicon.glyphicon-home
+              li.active: a(href='/requests'): span.glyphicon.glyphicon-inbox
+              li.active: a(href='/friends'): span.glyphicon.glyphicon-user
+              li.active: a(href='/history'): span.glyphicon.glyphicon-time
 
     script.
       $("#availability-toggle").bootstrapSwitch();
