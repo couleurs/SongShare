@@ -52,3 +52,22 @@ a {
 .user-offline {
   color: red;
 }
+
+.nav-pills li {
+  float:none;
+  display:table-cell;
+  width:1%;
+  text-align:center;
+}
+
+.navbar-fixed-top .navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+.navbar-brand {float:none;}
+
+.sign-up-button {
+  margin-left: 5px;
+}
