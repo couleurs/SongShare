@@ -10,10 +10,12 @@ block content
           h4.text-center.blank-message None of your friends are sharing with you right now
         .row
           hr
-      else
-        .row
-          each request, i in requests
-            .col-xs-12.col-md-4.col.xl-3
-              img.img-responsive(src='#{request.thumbnail_url}') 
-              h4= request.title  
-              a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <b>#{request.requester_name}</b>
+      .row
+        .col-xs-8.col-xs-offset-2.text-center
+          a.btn.btn-warning.dashboard-share-song(href='/picksong') Share a song
+      .row
+        each request, i in requests
+          .col-xs-12.col-md-4.col.xl-3
+            img.img-responsive(src='#{request.thumbnail_url}') 
+            h4= request.title  
+            a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <b>#{request.requester_name}</b>

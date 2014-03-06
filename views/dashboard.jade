@@ -16,6 +16,9 @@ block content
                 a.btn.btn-sm.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <strong>#{request.requester_name}</strong>
         if (numPendingRequests == 0)
           h5 No one is sharing with you right now
+          .row
+            .col-xs-8.col-xs-offset-2.text-center
+              a.btn.btn-warning.dashboard-share-song(href='/picksong') Share a song
           
 
 

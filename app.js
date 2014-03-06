@@ -58,8 +58,8 @@ app.get('/friends', routes.friends(db));
 app.get('/history', routes.historyPage(db));
 
 //listening room stuff
-app.post('/picksong', routes.picksong(db));
-app.post('/pickfriend', routes.picksong(db));
+app.get('/picksong', routes.picksong(db));
+app.post('/pickfriend', routes.pickfriend(db));
 app.get('/getVideoId/:roomId', routes.getVideoId(db));
 app.get('/signup', routes.signup(db));
 app.get('/expireroom/:listeningroom_id', listen.expire(db));
