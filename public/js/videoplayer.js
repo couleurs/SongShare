@@ -31,6 +31,8 @@ var ytVideoId;
 var listeningroom_id;
 var fetchVideoId;
 
+var socket;
+
 //setup functions
 var onIframeReady;
 var onDocumentReady;
@@ -41,6 +43,12 @@ $( document ).ready(function() {
 	ytVideoId = $('#player').data('videoid');
 	listeningroom_id = $('#player').data('listeningroomid');	  
 	documentReady = true;
+	
+	//local
+	socket = io.connect('http://localhost/listen'+listeningroom_id);
+	//heroku	
+	//socket = io.connect('https://songshare147.herokuapp.com/listen'+listeningroom_id);
+	setupSocket();
 
 	if (secondConnection && onIframeReady)
 		onIframeReady(ytVideoId);
@@ -52,7 +60,7 @@ var player;
 function onYouTubeIframeAPIReady() {	
   	onIframeReady = function(videoId) {  
   		console.log(videoId);
-  		$.get('/expireroom/'+listeningroom_id, function(data){ console.log("success"); });	
+  		$.get('/expireroom/'+listeningroom_id, function(data){});	
 	  	player = new YT.Player('player', {
 	    height: '158',
 	    width: '260',
@@ -70,11 +78,6 @@ function onYouTubeIframeAPIReady() {
 	}	
 }
 
-// for local testing
-var socket = io.connect('http://localhost/listen');
-//for heroku
-// var socket = io.connect('https://songshare147.herokuapp.com/listen');
-
 function onPlayerReady(event) {	
 	if (isMobile.iOS()) return;
 	player.playVideo();
@@ -88,24 +91,26 @@ function onPlayerStateChange(event) {
     }
 }
 
-socket.on('pauseplayer', function (data) {
-	if (isMobile.iOS()) return;
-	player.pauseVideo();
-});
+function setupSocket() {
+	socket.on('pauseplayer', function (data) {
+		if (isMobile.iOS()) return;
+		player.pauseVideo();
+	});
 
-socket.on('playplayer', function (data) {
-	if (isMobile.iOS()) return;
-	player.playVideo();
-});
+	socket.on('playplayer', function (data) {
+		if (isMobile.iOS()) return;
+		player.playVideo();
+	});
 
-socket.on('connections', function (data) {	
-	console.log(data.connections);
-	if (data.connections > 1) {		
-		secondConnection = true;	
+	socket.on('connections', function (data) {	
+		console.log(data.connections);
+		if (data.connections > 1) {		
+			secondConnection = true;	
 
-		if (secondConnection && documentReady) {
-			if (onIframeReady)
-				onIframeReady(ytVideoId);
+			if (secondConnection && documentReady) {
+				if (onIframeReady)
+					onIframeReady(ytVideoId);
+			}
 		}
-	}
-});
+	});
+}

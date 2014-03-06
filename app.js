@@ -51,7 +51,6 @@ app.get('/friends', routes.friends(db));
 app.get('/history', routes.historyPage(db));
 
 //listening room stuff
-app.get('/listeningroom/:id', routes.listeningRoom(db));
 app.post('/picksong', routes.picksong(db));
 app.get('/getVideoId/:roomId', routes.getVideoId(db));
 app.get('/user/:username', routes.user(db));
@@ -75,21 +74,24 @@ server.listen(app.get('port'), function(){
 //Socket.IO stuff
 var io = require('socket.io').listen(server);
 
-var connectCounter = 0;
+// var connectCounter = 0;
 
-var listenRoom = io.of("/listen").on('connection', function(socket) {	
-  connectCounter++;
-  listenRoom.emit('connections', { connections: connectCounter} );
+// var listenRoom = io.of("/listen").on('connection', function(socket) {	
+//   console.log("connected");
+//   connectCounter++;
+//   listenRoom.emit('connections', { connections: connectCounter} );
 
-  socket.on('paused', function (data) {
-    listenRoom.emit('pauseplayer');
-  });
+//   socket.on('paused', function (data) {
+//     listenRoom.emit('pauseplayer');
+//   });
 
-  socket.on('resumed', function (data) {
-    listenRoom.emit('playplayer');
-  });	
+//   socket.on('resumed', function (data) {
+//     listenRoom.emit('playplayer');
+//   });	
 
-  socket.on('disconnect', function () {
-    connectCounter--;
-  });
-});
+//   socket.on('disconnect', function () {
+//     connectCounter--;
+//   });
+// });
+
+app.get('/listeningroom/:id', routes.listeningRoom(db,io));

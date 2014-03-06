@@ -87,17 +87,47 @@ exports.historyPage = function(db){
   }
 }
 
-exports.listeningRoom = function(db) {
+exports.listeningRoom = function(db,io) {
   return function(req, res){
     loadUser(req.session.username, db, function(user) {
       req.session.user = user;
       var collection = db.get('songrequests');
 
       collection.findOne({listeningroom_id: req.params.id}, {}, function(e,doc){
-        var partnerName = (user.username == doc.receiver_name) ? doc.requester_name : doc.receiver_name;                              
+        var partnerName = (user.username == doc.receiver_name) ? doc.requester_name : doc.receiver_name;                                      
         res.render('listen', { title: 'Listen', listeningroom_id: req.params.id, videoId: req.query.videoId, partner_name: partnerName, db: db, session: req.session });  
-      })
-      
+
+        console.log(doc.oneConnected);
+        if (doc.oneConnected == "0") {
+          console.log("firstuser")
+          collection.update(
+            { listeningroom_id: req.params.id },
+            { $set: { oneConnected: "1" }},
+            {}
+          );
+
+          var connectCounter = 0;
+
+          var listenRoom = io.of("/listen"+req.params.id).on('connection', function(socket) {           
+            connectCounter++;
+            listenRoom.emit('connections', { connections: connectCounter} );
+
+            socket.on('paused', function (data) {
+              listenRoom.emit('pauseplayer');
+            });
+
+            socket.on('resumed', function (data) {
+              listenRoom.emit('playplayer');
+            }); 
+
+            socket.on('disconnect', function () {
+              console.log("disconnected" + req.session.username);
+              connectCounter--;
+            });
+          });
+        }
+
+      });      
     });
   };
 }
