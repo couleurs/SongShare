@@ -129,7 +129,16 @@ exports.picksong = function(db) {
   return function(req, res){
     loadUser(req.session.username, db, function(user) {
       req.session.user = user;
-      res.render('picksong', { title: 'Song Search', receiver_username: req.body.username, session: req.session });
+      res.render('picksong', { title: 'Song Search', session: req.session });
+    });
+  };
+}
+
+exports.pickfriend = function(db) {
+  return function(req, res){
+    loadUser(req.session.username, db, function(user) {
+      req.session.user = user;      
+      res.render('pickfriend', { title: 'Song Search', "video_id": req.body.video_id, "thumbnail_url": req.body.thumbnail_url, "title": req.body.video_title,  session: req.session });
     });
   };
 }
