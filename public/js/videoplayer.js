@@ -30,6 +30,9 @@ var isMobile = {
 var ytVideoId;
 var listeningroom_id;
 var fetchVideoId;
+var chatinput;
+var chatroom;
+var username;
 
 var socket;
 
@@ -43,7 +46,13 @@ $( document ).ready(function() {
 	ytVideoId = $('#player').data('videoid');
 	listeningroom_id = $('#player').data('listeningroomid');	  
 	documentReady = true;
-	
+	chatinput = $('#chatinput');
+	chatroom = $('#chatroom');
+	$('#chatsubmit').click(function() {
+		sendMessage();
+	});
+	username = $('#chatsubmit').data('username');
+
 	//local
 	socket = io.connect('http://localhost/listen'+listeningroom_id);
 	//heroku	
@@ -102,6 +111,10 @@ function setupSocket() {
 		player.playVideo();
 	});
 
+	socket.on('newMessage', function (data) {		
+		chatroom.append("<h5>"+data.message+"</h5>");
+	});
+
 	socket.on('connections', function (data) {	
 		console.log(data.connections);
 		if (data.connections > 1) {		
@@ -113,4 +126,8 @@ function setupSocket() {
 			}
 		}
 	});
+}
+
+function sendMessage() {	
+	socket.emit('newMessage', { message: "<b>" + username + "</b>" + ": " + chatinput.val() });
 }

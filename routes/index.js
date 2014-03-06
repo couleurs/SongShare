@@ -120,6 +120,10 @@ exports.listeningRoom = function(db,io) {
               listenRoom.emit('playplayer');
             }); 
 
+            socket.on('newMessage', function (data) {
+              listenRoom.emit('newMessage', { message: data.message });
+            });
+
             socket.on('disconnect', function () {
               console.log("disconnected" + req.session.username);
               connectCounter--;
