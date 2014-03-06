@@ -2,7 +2,7 @@ extends layout
 
 block content
   .container
-    h1 Pick a song
+    h2 Find a song
 
   // Search Box
   #receiver(data-name='#{receiver_username}')
@@ -15,7 +15,7 @@ block content
             button.btn.btn-default(type='button')
               span.glyphicon.glyphicon-search
 
-  .container
+  .container-fluid
     .row#yt-results
 
 block scripts

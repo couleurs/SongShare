@@ -21,7 +21,7 @@ block content
                 form#formListenTogether(name='addfriend' method='post' action='/picksong' role='form')
                   .form-group
                     input.form-control(type='hidden' name='username' value=friend.username)
-                  button.btn.btn-sm.btn-info(type='submit')
+                  button.btn.btn-sm.btn-warning(type='submit')
                     span.glyphicon.glyphicon-headphones
                     span &nbsp; Share
               .col-xs-3.col-xs-offset-6
@@ -34,9 +34,9 @@ block content
       .row
         .col-xs-12
           if (friends.length > 0)
-            h4 Find more friends
+            h3 Find more friends
           else
-            h4 Find a friend
+            h3 Find a friend
         .col-xs-12.col-lg-8
           .input-group.friend-search
             input#search-bar.form-control(type='text' placeholder='Search')

@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var friend = require('./routes/friend');
 var listen = require('./routes/listen');
+var ajax = require('./routes/ajax');
 var http = require('http');
 var path = require('path');
 var app = express();
@@ -69,26 +70,8 @@ app.post('/adduser', user.adduser(db, nodemailer));
 
 app.post('/addfriend', friend.addfriend(db));
 app.post('/removefriend', friend.removefriend(db));
-app.post('/usersearch', function(req, res) {
-  var users = db.get('users');
-  if (req.body.q == '') {
-    var response = {
-      html: ''
-    };
-    res.json(response);
-  } else {
-    users.findOne({'username': req.body.username}, {}, function(e, user) {
-      users.find({username: {$regex: '.*' + req.body.q + '.*', $options: 'i'}}, {}, function(e, docs) {
-        app.render('usersearch', {layout: false, results: docs, user: user}, function(err, html){
-          var response = {
-            html: html
-          };
-          res.json(response);
-        });
-      });
-    });
-  }
-});
+
+app.post('/usersearch', ajax.usersearch(db, app));
 
 var server = http.createServer(app);
 

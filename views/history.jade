@@ -15,11 +15,11 @@ block content
         - for (var i = requests.length - 1; i >= 0; i--)
           - var request = requests[i]
           .col-xs-12.col-md-4.col.xl-3
-            h4: a(href='http://youtu.be/' + request.video_id)= request.title
-            iframe(class='youtube-player' type='text/html' width='260' height='158' src='http://www.youtube.com/embed/' + request.video_id allowfullscreen frameborder='0')
             if (request.requester_name == session.user.username)
-              h5 Listened with 
+              h4 Shared with 
                 =request.receiver_name
             else
-              h5 Listened with  
+              h4 Shared with  
                 =request.requester_name
+            iframe(class='youtube-player' type='text/html' width='260' height='158' src='http://www.youtube.com/embed/' + request.video_id allowfullscreen frameborder='0')
+            hr

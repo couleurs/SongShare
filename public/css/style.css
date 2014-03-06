@@ -17,10 +17,16 @@ a {
 	padding: 1%;
 }
 
-.album-selector {
-	padding: 5%;
-	margin-top: 5%;
-	margin-bottom: 1%;
+.video-selector {
+	padding: 20px;
+}
+
+.video-title {
+  display:block;
+  width:100%;
+  height:40px;
+  vertical-align: text-bottom;
+  overflow:scroll;
 }
 
 .friend-selector {

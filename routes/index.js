@@ -129,7 +129,7 @@ exports.picksong = function(db) {
   return function(req, res){
     loadUser(req.session.username, db, function(user) {
       req.session.user = user;
-      res.render('picksong', { title: 'Pick Song', receiver_username: req.body.username, session: req.session });
+      res.render('picksong', { title: 'Song Search', receiver_username: req.body.username, session: req.session });
     });
   };
 }
