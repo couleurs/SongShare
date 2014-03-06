@@ -137,8 +137,11 @@ exports.picksong = function(db) {
 exports.pickfriend = function(db) {
   return function(req, res){
     loadUser(req.session.username, db, function(user) {
-      req.session.user = user;      
-      res.render('pickfriend', { title: 'Song Search', video_id: req.body.video_id, thumbnail_url: req.body.thumbnail_url, title: req.body.video_title,  session: req.session });
+      req.session.user = user;
+      var users = db.get('users');
+      users.find({username: {$in: user.friends}}, {}, function(e, friends) {
+        res.render('pickfriend', { title: 'Song Search', video_id: req.body.video_id, thumbnail_url: req.body.thumbnail_url, title: req.body.video_title, friends: friends, session: req.session });
+      });
     });
   };
 }

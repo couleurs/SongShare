@@ -4,8 +4,7 @@ block content
   .container
     .row
       .col-xs-12
-        -var friends = session.user.friends
-        if (!friends || friends.length == 0)
+        if (friends.length == 0)
           a(href='/friends'): h5 Go add some friends!
    
         else
@@ -25,11 +24,9 @@ block content
                       .col-xs-3.col-xs-offset-1
                         form.pull-right#formChooseFriend(name='chooseFriend' method='post' action='/listen' role='form')
                           .form-group
-                            input.form-control(type='hidden' name='username' value=friend.username)
-                            input.form-control(type='hidden' name='username' value=friend.username)
-                            input.form-control(type='hidden' name='username' value=friend.username)
-                            input.form-control(type='hidden' name='username' value=friend.username)
-                            input.form-control(type='hidden' name='username' value=friend.username)
+                            input.form-control(type='hidden' name='video_id' value=video_id)
+                            input.form-control(type='hidden' name='thumbnail_url' value=thumbnail_url)
+                            input.form-control(type='hidden' name='video_title' value=title)
                             input.form-control(type='hidden' name='username' value=friend.username)
                           button.btn.btn-xs.btn-warning.remove-friend-button(type='submit')
                             span.glyphicon.glyphicon-headphones
