@@ -45,22 +45,7 @@ html(lang='en')
               li.active: a(href='/requests'): span.glyphicon.glyphicon-inbox
               li.active: a(href='/friends'): span.glyphicon.glyphicon-user
               li.active: a(href='/history'): span.glyphicon.glyphicon-time
-
-    script.
-      function hideAddressBar()
-      {
-        if(!window.location.hash)
-        {
-            if(document.height < window.outerHeight)
-            {
-                document.body.style.height = (window.outerHeight + 50) + 'px';
-            }
-       
-            setTimeout( function(){ window.scrollTo(0, 30); }, 50 );
-        }
-      }
-      window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
-      window.addEventListener("orientationchange", hideAddressBar );
+                
     script.
       $("#availability-toggle").bootstrapSwitch();
       $("#availability-toggle").on('switchChange', function (e, data) {
