@@ -1,20 +1,23 @@
 extends layout
 
 block content
-  h1 Users
+  .container
+    h1 Users
 
   if (session.user)
-    ul.list-unstyled
-      each user, i in users
-        if (user.username != session.user.username)
-          .col-xs-12.col-lg-3.col-md-4
-            div.profile-info
-              h2= user.username
-              if (user.available)
-                h5.user-status.user-online online
-              else
-                h5.user-status.user-offline offline
-            form#formAddFriend(name='addfriend' method='post' action='/addfriend' role='form')
-              .form-group
-                input.form-control(type='hidden' name='username' value=user.username)
-              button.btn.btn-success(type='submit') Add friend
+    .container
+      .row
+        ul.list-unstyled
+          each user, i in users
+            if (user.username != session.user.username)
+              .col-xs-12.col-lg-3.col-md-4
+                div.profile-info
+                  h2= user.username
+                  if (user.available)
+                    h5.user-status.user-online online
+                  else
+                    h5.user-status.user-offline offline
+                form#formAddFriend(name='addfriend' method='post' action='/addfriend' role='form')
+                  .form-group
+                    input.form-control(type='hidden' name='username' value=user.username)
+                  button.btn.btn-success(type='submit') Add friend

@@ -55,6 +55,17 @@ html(lang='en')
 
     .container
       block content
+
+    .navbar.navbar-inverse.navbar-fixed-bottom(role='navigation')
+      .container
+        -if (session.user)
+          .navbar-header
+            ul.nav.nav-pills.nav-justified
+              li: a(href='/user/' + session.user.username): span.glyphicon.glyphicon-home
+              li: a(href='/requests'): span.glyphicon.glyphicon-inbox
+              li: a(href='/friends'): span.glyphicon.glyphicon-user
+              li: a(href='/history'): span.glyphicon.glyphicon-book
+
     script.
       $("#availability-toggle").bootstrapSwitch();
       $("#availability-toggle").on('switchChange', function (e, data) {
