@@ -20,22 +20,6 @@ html(lang='en')
       script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
       script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
 
-    script.
-      function hideAddressBar()
-      {
-        if(!window.location.hash)
-        {
-            if(document.height < window.outerHeight)
-            {
-                document.body.style.height = (window.outerHeight + 50) + 'px';
-            }
-       
-            setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
-        }
-      }
-      window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
-      window.addEventListener("orientationchange", hideAddressBar );
-
   body
     // navbar
     nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
@@ -62,6 +46,21 @@ html(lang='en')
               li.active: a(href='/friends'): span.glyphicon.glyphicon-user
               li.active: a(href='/history'): span.glyphicon.glyphicon-time
 
+    script.
+      function hideAddressBar()
+      {
+        if(!window.location.hash)
+        {
+            if(document.height < window.outerHeight)
+            {
+                document.body.style.height = (window.outerHeight + 50) + 'px';
+            }
+       
+            setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
+        }
+      }
+      window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
+      window.addEventListener("orientationchange", hideAddressBar );
     script.
       $("#availability-toggle").bootstrapSwitch();
       $("#availability-toggle").on('switchChange', function (e, data) {
