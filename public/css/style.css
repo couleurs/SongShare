@@ -29,6 +29,10 @@ a {
   overflow:scroll;
 }
 
+.video-thumbnail {
+  margin-bottom: 10px;
+}
+
 .friend-selector {
 	padding: 10%;
 	margin-top: 5%;
@@ -36,6 +40,10 @@ a {
 
 .friend-search {
   margin-bottom: 5px;
+}
+
+.chat-box {
+  margin-top: 5px;
 }
 
 .add-friend-button {

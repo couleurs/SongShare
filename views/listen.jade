@@ -1,30 +1,25 @@
 extends layout
 
 block content
+  .container
+    .row
+      .col-xs-12.col-md-offset-1.col-lg-offset-2
+        .h3 Listening with
+          strong  #{partner_name}        
 
   .container
     .row
-      .col-xs-12.col-sm-3
-        img.img-responsive.album-art
-  .container
-    .row
-      .col-xs-12.col-sm-4
-        .h4 Listening with #{partner_name}        
-
-  .container
-    .row
-      .col-xs-12
-        #player(data-videoid='#{videoId}', data-listeningroomid='#{listeningroom_id}') Please wait until the other listener connects
-
-    p    
-    .row
-      .col-xs-9        
-        input#chatinput.form-control(type='text' placeholder='Message' name='message')        
-      .col-xs-3
-        button#chatsubmit.btn.btn-success(type='submit', data-username='#{session.user.username}') Submit
-    .row
-      .col-xs-12
-        #chatroom
+      .col-xs-12.col-sm-5.col-md-4.col-md-offset-1.col-lg-3.col-lg-offset-2
+        #player(data-videoid='#{videoId}', data-listeningroomid='#{listeningroom_id}') Please wait until the other listener connects   
+      .col-xs-12.col-sm-7.col-md-6.col-lg-5
+        .input-group.chat-box.pull-right
+          input#chatinput.form-control(type='text' placeholder='Chat' name='message')
+          span.input-group-btn
+            button#chatsubmit.btn.btn-default(type='submit', data-username='#{session.user.username}')
+              span.glyphicon.glyphicon-comment
+        .row
+          .col-xs-12
+            #chatroom
 
 
   script(src="/socket.io/socket.io.js")

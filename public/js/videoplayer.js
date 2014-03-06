@@ -48,6 +48,11 @@ $( document ).ready(function() {
 	documentReady = true;
 	chatinput = $('#chatinput');
 	chatroom = $('#chatroom');
+  $('#chatinput').keypress(function (e) {
+    if (e.which == 13) {
+      sendMessage();
+    }
+  });
 	$('#chatsubmit').click(function() {
 		sendMessage();
 	});
@@ -111,8 +116,9 @@ function setupSocket() {
 		player.playVideo();
 	});
 
-	socket.on('newMessage', function (data) {		
-		chatroom.append("<h5>"+data.message+"</h5>");
+	socket.on('newMessage', function (data) {
+
+		chatroom.prepend("<h5>"+data.message+"</h5>");
 	});
 
 	socket.on('connections', function (data) {	
@@ -128,6 +134,7 @@ function setupSocket() {
 	});
 }
 
-function sendMessage() {	
+function sendMessage() {
 	socket.emit('newMessage', { message: "<b>" + username + "</b>" + ": " + chatinput.val() });
+  $("#chatinput").val('');
 }

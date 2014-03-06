@@ -19,7 +19,7 @@ block content
               h4 Shared with 
                 =request.receiver_name
             else
-              h4 Shared with  
+              h4 Listened with  
                 =request.requester_name
             iframe(class='youtube-player' type='text/html' width='260' height='158' src='http://www.youtube.com/embed/' + request.video_id allowfullscreen frameborder='0')
             hr
