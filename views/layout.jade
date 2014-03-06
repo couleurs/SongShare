@@ -19,7 +19,7 @@ html(lang='en')
     //if lt IE 9
       script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
       script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-  body(onload="window.top.scrollTo(0,1);")
+  body
     // navbar
     nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .navbar-header
@@ -52,6 +52,14 @@ html(lang='en')
               value = data.value;
         changeAvailability(session.username, value, db);
         alert(value);
+      });
+    script.
+      window.addEventListener("load",function() {
+        // Set a timeout...
+        setTimeout(function(){
+          // Hide the address bar!
+          window.scrollTo(0, 1);
+        }, 0);
       });
     // jQuery (necessary for Bootstrap's JavaScript plugins)    
     // Include all compiled plugins (below), or include individual files as needed
