@@ -138,7 +138,7 @@ exports.pickfriend = function(db) {
   return function(req, res){
     loadUser(req.session.username, db, function(user) {
       req.session.user = user;      
-      res.render('pickfriend', { title: 'Song Search', "video_id": req.body.video_id, "thumbnail_url": req.body.thumbnail_url, "title": req.body.video_title,  session: req.session });
+      res.render('pickfriend', { title: 'Song Search', video_id: req.body.video_id, thumbnail_url: req.body.thumbnail_url, title: req.body.video_title,  session: req.session });
     });
   };
 }
