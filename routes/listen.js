@@ -20,7 +20,8 @@ exports.listen = function(db, nodemailer) {
               "video_id": doc.video_id,
               "thumbnail_url": req.body.thumbnail_url,
               "title": req.body.video_title,
-              "active": "1"            
+              "active": "1",
+              "oneConnected": "0"            
             }, function(err, doc2) {
               if (err) {
                 console.log("ERROR is " + err);
