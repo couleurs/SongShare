@@ -3,9 +3,8 @@ html(lang='en')
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(name='apple-mobile-web-app-capable' content='yes')
-    meta(name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;")
+    meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0")
     title= title
     // Bootstrap
     link(href='/css/bootstrap.min.css', rel='stylesheet')
@@ -41,23 +40,15 @@ html(lang='en')
         .container
           .navbar-header
             ul.nav.nav-pills
-              li.active: a(href='/user/' + session.user.username): span.glyphicon.glyphicon-home
-              li.active: a(href='/requests'): span.glyphicon.glyphicon-inbox
+              li.active: a(href='/dashboard'): span.glyphicon.glyphicon-home
+              li.active: a(href='/shares'): span.glyphicon.glyphicon-inbox
               li.active: a(href='/friends'): span.glyphicon.glyphicon-user
               li.active: a(href='/history'): span.glyphicon.glyphicon-time
-                
-    script.
-      $("#availability-toggle").bootstrapSwitch();
-      $("#availability-toggle").on('switchChange', function (e, data) {
-        var $element = $(data.el),
-              value = data.value;
-        changeAvailability(session.username, value, db);
-        alert(value);
-      });
+
+    block scripts
     // jQuery (necessary for Bootstrap's JavaScript plugins)    
     // Include all compiled plugins (below), or include individual files as needed
     script(src='/js/bootstrap.min.js')
-    script(src='/js/songsearch.js')
     script(src='/js/availability.js')
     script(src="https://apis.google.com/js/client.js?onload=handleClientLoad")
 

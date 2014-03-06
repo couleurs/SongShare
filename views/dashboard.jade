@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  .container
+    .row            
+      .col-xs-12
+        h3 Active shares
+        - var numPendingRequests = 0;
+        each request, i in requests
+          if (request.receiver_name == session.user.username && request.active == 1)
+            - numPendingRequests++;
+            .col-xs-12.col-md-4.col.xl-3
+              img.img-responsive(src='#{request.thumbnail_url}') 
+              h4= request.title  
+              a.btn.btn-info(href='/listeningroom/'+request.listeningroom_id+'?videoId='+request.video_id role='button') Listen with <b>#{request.requester_name}</b>
+        if (numPendingRequests == 0)
+          h5 No one is sharing with you right now
+
+
+      .col-xs-12
+        hr
+        h3 Online friends
+        - var numOnlineFriends = 0;
+        each friend, i in friends
+            if (friend.available)
+              -numOnlineFriends++;
+              .row
+                .col-xs-12.col-lg-3.col-md-4
+                  .row
+                    .col-xs-6
+                      h4
+                        small.user-status.user-online
+                          span.glyphicon.glyphicon-user
+                        =friend.username
+                    .col-xs-3.col-xs-offset-3
+                      form.pull-right.dashboard-share#formListenTogether(name='picksong' method='post' action='/picksong' role='form')
+                        .form-group
+                          input.form-control(type='hidden' name='username' value=friend.username)
+                        button.btn.btn-xs.btn-info(type='submit')
+                          span.glyphicon.glyphicon-headphones
+                          span &nbsp; Share
+        if (friends.length == 0)
+          a(href='/friends'): h5 Go add some friends!
+        else if (numOnlineFriends == 0)
+          h5 None of your friends are online
+
+
+      .col-xs-12
+        hr
+        h3 History
+        - var numHistory = 0;
+        - for (var i = requests.length - 1; i >= 0; i--)
+          - var request = requests[i]
+          if (request.active == 0 && numHistory < 3)
+            - numHistory++;
+            .col-xs-12.col-md-4.col.xl-3
+              h4: a(href='http://youtu.be/' + request.video_id)= request.title
+              if (request.requester_name == session.user.username)
+                h5 Listened with 
+                  =request.receiver_name
+              else
+                h5 Listened with  
+                  =request.requester_name
+        if (numHistory == 0)
+          h5 You haven't shared any songs yet

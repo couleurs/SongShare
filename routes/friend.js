@@ -9,9 +9,8 @@ exports.addfriend = function(db) {
     addToFriendsList(friendUsername, username, db);
 
     req.session.user.friends.push(friendUsername);
-    console.log(req.session.user.friends);
-    res.location('/user/' + friendUsername);
-    res.redirect('/user/' + friendUsername);
+    res.location('/friends');
+    res.redirect('/friends');
   }
 }
 
@@ -46,9 +45,8 @@ exports.removefriend = function(db) {
 
     var index = req.session.user.friends.indexOf(friendUsername);
     req.session.user.friends.splice(index, 1);
-    console.log(req.session.user.friends);
-    res.location('/user/' + friendUsername);
-    res.redirect('/user/' + friendUsername);
+    res.location('/friends');
+    res.redirect('/friends');
   }
 }
 

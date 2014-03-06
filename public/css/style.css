@@ -2,6 +2,7 @@ body {
   padding-top: 60px;
   padding-bottom: 60px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  min-height: 700px;
 }
 
 a {
@@ -27,6 +28,20 @@ a {
 	margin-top: 5%;
 }
 
+.friend-search {
+  margin-bottom: 5px;
+}
+
+.add-friend-button {
+  position:relative;
+  top:-9px;
+}
+
+.dashboard-share {
+  position:relative;
+  top:-8px;
+}
+
 .album-art {
 	padding: 5%;
 }
@@ -41,15 +56,20 @@ a {
 }
 
 .user-status {
-  opacity: 0.5;
+  opacity: 1;
+  margin-right: 10px;
 }
 
 .user-online {
-  color: green;
+  color: #43ac6a;
 }
 
 .user-offline {
-  color: red;
+  color: #f04124;
+}
+
+.blank-message {
+  line-height: 150%;
 }
 
 .nav-pills li {

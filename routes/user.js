@@ -10,7 +10,7 @@ exports.login = function(db) {
         if (doc.password == password) {
           setAvailability(username, true, db);
           req.session.username = username;
-          res.redirect('/user/' + username);
+          res.redirect('/dashboard');
         } else {
           res.send('incorrect password');
         }
@@ -52,8 +52,8 @@ exports.adduser = function(db, nodemailer) {
         sendWelcomeEmail(doc, nodemailer);
         setAvailability(username, true, db);
         req.session.username = username;
-        res.location('/user/' + username);
-        res.redirect('/user/' + username);
+        res.location('/dashboard');
+        res.redirect('/dashboard');
       }
     });
   }

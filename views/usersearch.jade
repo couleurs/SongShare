@@ -1,0 +1,21 @@
+each result, i in results
+  if (result.username != user.username && user.friends.indexOf(result.username) == -1)
+    .col-xs-12.col-lg-3.col-md-4
+      .row
+        .col-xs-6
+          if (result.available)
+            h4
+              small.user-status.user-online
+                span.glyphicon.glyphicon-user
+              =result.username
+          else
+            h4
+              small.user-status.user-offline
+                span.glyphicon.glyphicon-user
+              =result.username
+        .col-xs-3.col-xs-offset-3
+          form.pull-right.add-friend-button#formAddFriend(name='addfriend' method='post' action='/addfriend' role='form')
+            .form-group
+              input.form-control(type='hidden' name='username' value=result.username)
+            button.btn.btn-xs.btn-success(type='submit')
+              span.glyphicon.glyphicon-plus

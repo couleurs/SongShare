@@ -6,21 +6,69 @@ block content
       .row
         each friend, i in friends
           .col-xs-12.col-lg-3.col-md-4
-              div.profile-info
-                h2= friend.username
-                if (friend.available)
-                  h5.user-status.user-online online
-                else
-                  h5.user-status.user-offline offline
-              form#formListenTogether(name='addfriend' method='post' action='/picksong' role='form')
-                .form-group
-                  input.form-control(type='hidden' name='username' value=friend.username)
-                button.btn.btn-info(type='submit') Listen together
-              form#formRemoveFriend(name='removefriend' method='post' action='/removefriend' role='form')
-                .form-group
-                  input.form-control(type='hidden' name='username' value=friend.username)
-                button.btn.btn-danger(type='submit') Remove friend
+            if (friend.available)
+              h3
+                small.user-status.user-online
+                  span.glyphicon.glyphicon-user
+                =friend.username
+            else
+              h3
+                small.user-status.user-offline
+                  span.glyphicon.glyphicon-user
+                =friend.username
+            .row
+              .col-xs-3
+                form#formListenTogether(name='addfriend' method='post' action='/picksong' role='form')
+                  .form-group
+                    input.form-control(type='hidden' name='username' value=friend.username)
+                  button.btn.btn-sm.btn-info(type='submit')
+                    span.glyphicon.glyphicon-headphones
+                    span &nbsp; Share
+              .col-xs-3.col-xs-offset-6
+                form.pull-right#formRemoveFriend(name='removefriend' method='post' action='/removefriend' role='form')
+                  .form-group
+                    input.form-control(type='hidden' name='username' value=friend.username)
+                  button.btn.btn-sm.btn-danger(type='submit')
+                    span.glyphicon.glyphicon-remove
+            hr
       .row
         .col-xs-12
-          hr
-          a(href='/userlist'): h4 Find more friends
+          if (friends.length > 0)
+            h4 Find more friends
+          else
+            h4 Find a friend
+        .col-xs-12.col-lg-8
+          .input-group.friend-search
+            input#search-bar.form-control(type='text' placeholder='Search')
+            input#user-data(type='hidden' name='user-data' value=session.user.username)
+            span.input-group-btn
+              button#search-button.btn.btn-default(type='button')
+                span.glyphicon.glyphicon-search
+      .row#responseID
+
+block scripts
+  script.
+    $(document).ready(function()
+    {   
+
+        $('#search-bar').keyup(function() {
+          $.ajax({
+            dataType: 'json',
+            data: {
+                    q: $(this).val(),
+                    username: $('#user-data').val()
+                  },
+            type: 'POST',
+            url: "./usersearch",
+            success: handleSearchResponse
+          });
+        });
+
+        function handleSearchResponse(data)
+        {
+          $('#responseID').html(data.html);
+        }
+
+    });
+
+

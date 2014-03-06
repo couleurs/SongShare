@@ -12,22 +12,10 @@
   };
 }
 
-exports.userlist = function(db) {
-  return function(req, res) {
-    var users = db.get('users');
-    loadUser(req.session.username, db, function(user) {
-      users.find({username: {$nin: user.friends}}, {}, function(e, docs) {
-        req.session.user = user;
-        res.render('userlist', { title: 'Users', users: docs, db: db, session: req.session });
-      });
-    });
-  };
-}
-
 exports.friends = function(db) {
   return function(req, res) {
-    var users = db.get('users');
     loadUser(req.session.username, db, function(user) {
+      var users = db.get('users');
       users.find({username: {$in: user.friends}}, {}, function(e, docs) {
         req.session.user = user;
         res.render('friends', { title: 'Friends', friends: docs, db: db, session: req.session });
@@ -36,39 +24,28 @@ exports.friends = function(db) {
   };
 }
 
-exports.user = function(db){
+exports.dashboard = function(db) {
   return function(req, res) {
-    var users = db.get('users');
-    var username;
-    if (req.params.username != 'undefined')
-      username = req.params.username;
-    else
-      username = req.session.username
-
-    users.findOne({'username': username}, {}, function(e, doc) {
-      loadUser(req.session.username, db, function(user) {
-        req.session.user = user;
-        var requests = db.get('songrequests');
-        if (user)
-          requests.find({$or: [ {receiver_name: user.username}, {requester_name: user.username}]}, {}, function(e, requests) {    
-            users.find({username: {$in: user.friends}}, {}, function(e, friends) {
-              res.render('user', { title: doc.username, profile: doc, requests: requests, friends: friends, db: db, session: req.session });
-            });
-          });
-        else
-          res.render('user', { title: doc.username, profile: doc, requests: [], friends: [], db: db, session: req.session });
+    loadUser(req.session.username, db, function(user) {
+      req.session.user = user;
+      var requests = db.get('songrequests');
+      requests.find({$or: [ {receiver_name: user.username}, {requester_name: user.username}]}, {}, function(e, requests) {    
+        var users = db.get('users');
+        users.find({username: {$in: user.friends}}, {}, function(e, friends) {
+          res.render('dashboard', { title: user.username, requests: requests, friends: friends, db: db, session: req.session });
+        });
       });
     });
   }
 }
 
-exports.requests = function(db){
+exports.shares = function(db){
   return function(req, res) {
     var requests = db.get('songrequests');
     requests.find({$and: [{receiver_name: req.session.user.username}, {active: '1'}]}, {}, function(e, docs) {
       loadUser(req.session.username, db, function(user) {
         req.session.user = user;
-        res.render('requests', { title: 'Requests', requests: docs, db: db, session: req.session });
+        res.render('shares', { title: 'Shares', requests: docs, db: db, session: req.session });
       });
     });
   }

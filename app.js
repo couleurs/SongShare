@@ -35,9 +35,15 @@ var mongo = require('mongodb');
 var monk = require('monk');
 
 // for local testing
-// var db = monk('localhost:27017/songshare'); 
+var db = monk('localhost:27017/songshare'); 
 // for heroku
-var db = monk(process.env.MONGOLAB_URI);
+// var db = monk(process.env.MONGOLAB_URI);
+
+var users = db.get('users');
+users.update(
+    {},
+    { $set: { available: false }},
+    {multi:true});
 
 var nodemailer = require('nodemailer');
 
@@ -45,15 +51,14 @@ var less = require('less');
 
 
 app.get('/', routes.index(db));
-app.get('/userlist', routes.userlist(db));
-app.get('/requests', routes.requests(db));
+app.get('/dashboard', routes.dashboard(db));
+app.get('/shares', routes.shares(db));
 app.get('/friends', routes.friends(db));
 app.get('/history', routes.historyPage(db));
 
 //listening room stuff
 app.post('/picksong', routes.picksong(db));
 app.get('/getVideoId/:roomId', routes.getVideoId(db));
-app.get('/user/:username', routes.user(db));
 app.get('/signup', routes.signup(db));
 app.get('/expireroom/:listeningroom_id', listen.expire(db));
 app.post('/listen', listen.listen(db, nodemailer));
@@ -64,6 +69,26 @@ app.post('/adduser', user.adduser(db, nodemailer));
 
 app.post('/addfriend', friend.addfriend(db));
 app.post('/removefriend', friend.removefriend(db));
+app.post('/usersearch', function(req, res) {
+  var users = db.get('users');
+  if (req.body.q == '') {
+    var response = {
+      html: ''
+    };
+    res.json(response);
+  } else {
+    users.findOne({'username': req.body.username}, {}, function(e, user) {
+      users.find({username: {$regex: '.*' + req.body.q + '.*', $options: 'i'}}, {}, function(e, docs) {
+        app.render('usersearch', {layout: false, results: docs, user: user}, function(err, html){
+          var response = {
+            html: html
+          };
+          res.json(response);
+        });
+      });
+    });
+  }
+});
 
 var server = http.createServer(app);
 
