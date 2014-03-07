@@ -8,12 +8,12 @@ exports.login = function(db) {
     users.findOne({'username': username}, {}, function(e, doc) {
       if (doc) {
         if (doc.password == password) {
-          setAvailability(username, true, db);
-          req.session.username = username;
           if (doc.site == 'A') {
+            setAvailability(username, true, db);
+            req.session.username = username;
             res.redirect('/dashboard');
           } else {
-            res.redirect('Http://songshare147b.herokuapp.com/dashboard');
+            res.redirect('http://songshare147b.herokuapp.com/login');
           }
         } else {
           res.send('incorrect password');
