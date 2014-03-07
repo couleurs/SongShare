@@ -13,7 +13,7 @@ exports.login = function(db) {
           if (doc.site == 'A') {
             res.redirect('/dashboard');
           } else {
-            res.redirect('songshare147b.herokuapp.com/dashboard');
+            res.redirect('Http://songshare147b.herokuapp.com/dashboard');
           }
         } else {
           res.send('incorrect password');
@@ -67,8 +67,8 @@ exports.adduser = function(db, nodemailer) {
           res.location('/dashboard');
           res.redirect('/dashboard');
         } else {
-          res.location('songshare147b.herokuapp.com/dashboard');
-          res.redirect('songshare147b.herokuapp.com/dashboard');
+          res.location('http://songshare147b.herokuapp.com/dashboard');
+          res.redirect('http://songshare147b.herokuapp.com/dashboard');
         }
       }
     });
