@@ -10,7 +10,11 @@ exports.login = function(db) {
         if (doc.password == password) {
           setAvailability(username, true, db);
           req.session.username = username;
-          res.redirect('/dashboard');
+          if (doc.site == 'A') {
+            res.redirect('/dashboard');
+          } else {
+            res.redirect('songshare147b.herokuapp.com/dashboard');
+          }
         } else {
           res.send('incorrect password');
         }
@@ -36,6 +40,12 @@ exports.adduser = function(db, nodemailer) {
     var username = req.body.username;
     var email = req.body.email;
     var password = req.body.password;
+    var site;
+    if (Math.random() < 0.5) {
+      site = 'A';
+    } else {
+      site = 'B';
+    }
 
     var users = db.get('users');
 
@@ -43,7 +53,8 @@ exports.adduser = function(db, nodemailer) {
       'username': username,
       'email': email,
       'password': password,
-      'friends': []
+      'friends': [],
+      'site': site
     }, function (err, doc) {
       if (err) {
         res.send('There was a problem adding the information to the database.');
@@ -52,8 +63,13 @@ exports.adduser = function(db, nodemailer) {
         sendWelcomeEmail(doc, nodemailer);
         setAvailability(username, true, db);
         req.session.username = username;
-        res.location('/dashboard');
-        res.redirect('/dashboard');
+        if (site == 'A') {
+          res.location('/dashboard');
+          res.redirect('/dashboard');
+        } else {
+          res.location('songshare147b.herokuapp.com/dashboard');
+          res.redirect('songshare147b.herokuapp.com/dashboard');
+        }
       }
     });
   }
