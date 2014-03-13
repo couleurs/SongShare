@@ -8,11 +8,7 @@
     loadUser(req.session.username, db, function(user) {
       req.session.user = user;
       if (user == null) {
-        if (Math.random() < 0.5) {
-          res.redirect("http://songshare147b.herokuapp.com");
-        } else {
-          res.render('index', { title: 'SongShare', db: db, session: req.session });
-        }
+        res.render('index', { title: 'SongShare', db: db, session: req.session });
       }
       res.render('index', { title: 'SongShare', db: db, session: req.session });
     });

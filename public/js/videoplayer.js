@@ -61,7 +61,7 @@ $( document ).ready(function() {
 	//local
 	// socket = io.connect('http://localhost/listen'+listeningroom_id);
 	//heroku	
-	socket = io.connect('https://songshare147b.herokuapp.com/listen'+listeningroom_id);
+	socket = io.connect('https://songshare147.herokuapp.com/listen'+listeningroom_id);
 	setupSocket();
 
 	if (secondConnection && onIframeReady)
