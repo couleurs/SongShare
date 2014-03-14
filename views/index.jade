@@ -2,10 +2,11 @@ extends layout
 
 block content
   div.jumbotron
-    .container
-      .col-xs-12
-      h1.text-center= title
-      h4.text-center Welcome to SongShare!
+    .row
+      img.img-responsive.center-block(src='/images/blue_logo_sized.png' alt='Songshare')
+    .container   
+      hr
+      h4.text-center Welcome to Songshare!
       -if (!session.user)
         .row
           .col-xs-12.col-sm-6.col-sm-offset-3.col-lg-4.col-lg-offset-4

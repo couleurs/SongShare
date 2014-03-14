@@ -7,7 +7,7 @@
   return function(req, res) {
     loadUser(req.session.username, db, function(user) {
       req.session.user = user;
-      res.render('index', { title: 'SongShare', db: db, session: req.session });
+      res.render('index', { title: 'Songshare', db: db, session: req.session });
     });
   };
 }

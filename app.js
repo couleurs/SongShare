@@ -37,9 +37,9 @@ var monk = require('monk');
 
 // for local testing
 
-//var db = monk('localhost:27017/songshare'); 
+var db = monk('localhost:27017/songshare'); 
 // for heroku
-var db = monk(process.env.MONGOLAB_URI);
+// var db = monk(process.env.MONGOLAB_URI);
 
 
 var users = db.get('users');
