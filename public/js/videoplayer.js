@@ -59,11 +59,11 @@ $( document ).ready(function() {
 	username = $('#chatsubmit').data('username');
 
 	//local
-	socket = io.connect('http://localhost/listen'+listeningroom_id);
+	// socket = io.connect('http://localhost/listen'+listeningroom_id);
 	//heroku a
 	// socket = io.connect('https://songshare147.herokuapp.com/listen'+listeningroom_id);
 	//heroku b	
-	// socket = io.connect('https://songshare147b.herokuapp.com/listen'+listeningroom_id);
+	socket = io.connect('https://songshare147b.herokuapp.com/listen'+listeningroom_id);
 	setupSocket();
 
 	if (secondConnection && onIframeReady)
